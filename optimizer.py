@@ -44,6 +44,9 @@ class Optimizer(object):
         index = np.argmax(ei)
         return self.__domain[index, :]
 
+    def update(new_data):
+        pass
+
     def get_prediction(self):
         return self.__domain, self.__pred, self.__hi_ci, self.__lo_ci
 

@@ -74,6 +74,9 @@ class NeuralNet(object):
 
         return X
 
+    def update(new_data):
+        pass
+
 if __name__ == "__main__":
     # Settings
     lim_x        = [-1, 1]                                     # x range for univariate data

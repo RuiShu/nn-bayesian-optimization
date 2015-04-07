@@ -45,7 +45,7 @@ if __name__ == "__main__":
     dataset_Y = np.asarray([[g(dataset_X[i, :])[0]] for i in range(dataset_X.shape[0])])
     dataset = np.concatenate((dataset_X, dataset_Y), axis=1)
     linear_regressor = LinearRegressor(dataset)
-    test_X = np.asarray([[i] for i in np.linspace(-5, 5, 100)])
+    test_X = np.asarray([[i] for i in np.linspace(-lim_x[0], lim_x[1], 100)])
     linear_regressor.predict(test_X)
 
 

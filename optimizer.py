@@ -19,6 +19,11 @@ class Optimizer(object):
         self.__domain = domain
 
     def train(self):
+        """ Using the stored dataset and architecture, trains the neural net to 
+        perform feature extraction, and the linear regressor to perform prediction
+        and confidence interval computation.
+        """
+
         self.__feature_extractor.train()
         train_X = self.__dataset[:, :-1]
         train_Y = self.__dataset[:, -1:]
@@ -33,6 +38,10 @@ class Optimizer(object):
         self.__pred, self.__hi_ci, self.__lo_ci = linear_regressor.predict(domain_features)
 
     def select(self):
+        """ Selects and returns the point in the domain X that has the max expected
+        improvements.
+        """
+
         train_Y    = self.__dataset[:, -1:]
         prediction = self.__pred
         hi_ci      = self.__hi_ci
@@ -45,6 +54,15 @@ class Optimizer(object):
         return self.__domain[index, :]
 
     def update(self, new_data):
+        """ After the selected point (see select()) is queried, insert the new info
+        into dataset. Depending on the size of the dataset, the module decides whether
+        to re-train the neural net (for feature extraction). 
+        A new interpolation is then constructed.
+
+        Keyword arguments:
+        new_data -- a 1 by (m+1) array that forms the matrix [X, Y]
+        """
+
         self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
         nobs = self.__dataset.shape[0]
 
@@ -74,7 +92,7 @@ class Optimizer(object):
 if __name__ == "__main__":
     # Settings
     lim_x        = [-1, 1]                                     # x range for univariate data
-    nobs         = 10                                         # number of observed data
+    nobs         = 1000                                         # number of observed data
     architecture = (1, 50, 50, nobs-2 if nobs < 50 else 50, 1) # Define NN layer architecture
     g            = lambda x: np.exp(-x)*np.sin(10*x)*x-4*x**2 + np.random.randn()/10 # Define the hidden function
     noiseless_g  = lambda x: np.exp(-x)*np.sin(10*x)*x-4*x**2             
@@ -92,12 +110,10 @@ if __name__ == "__main__":
     domain, pred, hi_ci, lo_ci = optimizer.get_prediction()
 
     # Update
-    new_data = np.asarray([selected_point, g(selected_point)])
-    optimizer.update(new_data.T)
+    # new_data = np.asarray([selected_point, g(selected_point)])
+    # optimizer.update(new_data.T)
     dataset = optimizer.get_dataset()
     
-    print dataset
-
     # Plot results
     ax = plt.gca()
     true_func = np.asarray([[i, noiseless_g(i)] for i in np.linspace(lim_x[0], lim_x[1], 100)], dtype=np.float32)

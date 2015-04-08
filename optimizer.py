@@ -44,17 +44,37 @@ class Optimizer(object):
         index = np.argmax(ei)
         return self.__domain[index, :]
 
-    def update(new_data):
-        pass
+    def update(self, new_data):
+        self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
+        nobs = self.__dataset.shape[0]
+
+        if nobs < 100:
+            # Retrain NN if number of samples is less than 100 
+            self.__architecture = (1, 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
+            self.__feature_extractor.update(self.__architecture, new_data)
+
+        train_X = self.__dataset[:, :-1]
+        train_Y = self.__dataset[:, -1:]
+
+        # Extract features
+        train_features = self.__feature_extractor.extract_features(train_X)
+        domain_features = self.__feature_extractor.extract_features(self.__domain)
+        lm_dataset = np.concatenate((train_features, train_Y), axis=1)
+
+        # Train and predict with linear_regressor
+        linear_regressor = lm.LinearRegressor(lm_dataset)
+        self.__pred, self.__hi_ci, self.__lo_ci = linear_regressor.predict(domain_features)
 
     def get_prediction(self):
         return self.__domain, self.__pred, self.__hi_ci, self.__lo_ci
 
+    def get_dataset(self):
+        return self.__dataset
 
 if __name__ == "__main__":
     # Settings
     lim_x        = [-1, 1]                                     # x range for univariate data
-    nobs         = 100                                         # number of observed data
+    nobs         = 10                                         # number of observed data
     architecture = (1, 50, 50, nobs-2 if nobs < 50 else 50, 1) # Define NN layer architecture
     g            = lambda x: np.exp(-x)*np.sin(10*x)*x-4*x**2 + np.random.randn()/10 # Define the hidden function
     noiseless_g  = lambda x: np.exp(-x)*np.sin(10*x)*x-4*x**2             
@@ -64,12 +84,19 @@ if __name__ == "__main__":
     dataset_Y = np.asarray([[g(dataset_X[i, :])[0]] for i in range(dataset_X.shape[0])])
     domain = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], 100)])
     dataset = np.concatenate((dataset_X, dataset_Y), axis=1)
-
+    
     # Instantiate Optimizer
     optimizer = Optimizer(dataset, domain)
     optimizer.train()
     selected_point = optimizer.select()
     domain, pred, hi_ci, lo_ci = optimizer.get_prediction()
+
+    # Update
+    new_data = np.asarray([selected_point, g(selected_point)])
+    optimizer.update(new_data.T)
+    dataset = optimizer.get_dataset()
+    
+    print dataset
 
     # Plot results
     ax = plt.gca()
@@ -80,7 +107,7 @@ if __name__ == "__main__":
     plt.plot(domain, lo_ci, 'g--')
     plt.plot([selected_point, selected_point], [ax.axis()[2], ax.axis()[3]], 'r--',
              label='EI selection')
-    plt.plot(dataset_X, dataset_Y, 'rv', label='training', markersize=7.)
+    plt.plot(dataset[:,:-1], dataset[:, -1:], 'rv', label='training', markersize=7.)
     plt.xlabel('Input space')
     plt.ylabel('Output space')
     plt.title("NN-LR regression")

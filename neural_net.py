@@ -31,11 +31,11 @@ class NeuralNet(object):
         e = theanets.Experiment(theanets.feedforward.Regressor,
                                 layers=architecture,
                                 optimize='sgd',
-                                activation='tanh', 
+                                hidden_activation='tanh', 
                                 output_activation='linear',
                                 learning_rate=0.01)
         
-        e.run(train_set, valid_set)
+        e.train(train_set, valid_set)
         self.__e = e
         self.extract_params()
 
@@ -74,8 +74,11 @@ class NeuralNet(object):
 
         return X
 
-    def update(new_data):
-        pass
+    def update(self, architecture, new_data):
+        self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
+        self.__architecture = architecture
+        self.train()
+
 
 if __name__ == "__main__":
     # Settings
@@ -91,3 +94,4 @@ if __name__ == "__main__":
     feature_extractor.train()
     train_X = dataset[:, :-1]
     train_features = feature_extractor.extract_features(train_X)
+    feature_extractor.update(dataset)

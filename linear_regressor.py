@@ -1,6 +1,7 @@
 import numpy as np
 import statsmodels.api as sm
 import sklearn.linear_model as sklm
+import matplotlib.pyplot as plt
 
 class LinearRegressor():
 
@@ -50,16 +51,30 @@ class LinearRegressor():
 
 if __name__ == "__main__":
     # Settings
-    lim_x        = [-1, 1]                                     # x range for univariate data
-    nobs         = 100                                         # number of observed data
-    architecture = (1, 50, 50, nobs-2 if nobs < 50 else 50, 1) # Define NN layer architecture
-    g            = lambda x: 2*x + 3 + np.random.randn()/10 # Define the hidden function
-    dataset_X = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], nobs)], dtype=np.float32) # Uniform sampling
+    lim_x        = [-10, 10]                                     # x range for univariate data
+    nobs         = 50                                         # number of observed data
+    g            = lambda x: 2*x + 3 + np.random.randn()*2 # Define the hidden function
+    noiseless_g            = lambda x: 2*x + 3 # Define the hidden function
+
+    dataset_X1 = np.asarray([[i] for i in np.linspace(lim_x[0]/10-3, lim_x[1]/10-3, nobs)], dtype=np.float32) # Uniform sampling
+    dataset_X2 = np.asarray([[i] for i in np.linspace(lim_x[0]/10+3, lim_x[1]/10+3, nobs)], dtype=np.float32) # Uniform sampling
+    dataset_X = np.concatenate((dataset_X1, dataset_X2), axis=0)
     dataset_Y = np.asarray([[g(dataset_X[i, :])[0]] for i in range(dataset_X.shape[0])])
     dataset = np.concatenate((dataset_X, dataset_Y), axis=1)
     linear_regressor = LinearRegressor(dataset)
-    test_X = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], 100)])
-    linear_regressor.predict(test_X)
-    linear_regressor.predict_reg(test_X)
+    domain = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], 100)])
+    pred, hi_ci, lo_ci = linear_regressor.predict(domain)
+    # linear_regressor.predict_reg(test_X)
 
-
+    ax = plt.gca()
+    true_func = np.asarray([[i, noiseless_g(i)] for i in np.linspace(lim_x[0], lim_x[1], 100)], dtype=np.float32)
+    plt.plot(true_func[:, 0], true_func[:, 1], 'k', label='true', linewidth=4) # true plot
+    plt.plot(domain, pred, 'c--', label='LR regression', linewidth=7)
+    plt.plot(domain, hi_ci, 'g--', label='ci')
+    plt.plot(domain, lo_ci, 'g--')
+    plt.plot(dataset[:,:-1], dataset[:, -1:], 'rv', label='training', markersize=7.)
+    plt.xlabel('Input space')
+    plt.ylabel('Output space')
+    plt.title("LR regression")
+    plt.legend()
+    plt.show()

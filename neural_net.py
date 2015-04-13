@@ -13,7 +13,7 @@ class NeuralNet(object):
         """
         self.__architecture = architecture
         self.__dataset = dataset
-        self.__e = None
+        self.e = None
     
     def train(self):
         architecture = self.__architecture
@@ -36,12 +36,12 @@ class NeuralNet(object):
                                 learning_rate=0.01)
         
         e.train(train_set, valid_set)
-        self.__e = e
+        self.e = e
         self.extract_params()
 
     def extract_params(self):
         architecture = self.__architecture
-        e = self.__e
+        e = self.e
         # Extract parameters
         W = {}
         B = {}

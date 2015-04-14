@@ -1,8 +1,11 @@
+import time
 import numpy as np
 import neural_net as nn
 import linear_regressor as lm
 import scipy.stats as stats
 import matplotlib.pyplot as plt
+import random
+from hidden_function import evaluate
 
 class Optimizer(object):
 
@@ -17,6 +20,9 @@ class Optimizer(object):
         self.__architecture = (1, 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
         self.__feature_extractor = nn.NeuralNet(self.__architecture, dataset)
         self.__domain = domain
+
+    def update_feature_extractor(self, feature_extractor):
+        self.__feature_extractor = feature_extractor
 
     def train(self):
         """ Using the stored dataset and architecture, trains the neural net to 
@@ -94,8 +100,8 @@ class Optimizer(object):
         self.__gamma = gamma
         self.__ei = ei
 
-        print "Best point is at: " + str(self.__domain[index, :])
-        return self.__domain[index, :]
+        print "optimizer.py: Best point is at: " + str(self.__domain[index, :])
+        return np.array([self.__domain[index, :]])
 
     def check_point(self, selected_index, order):
         prediction = self.__pred
@@ -106,7 +112,10 @@ class Optimizer(object):
 
         return (stats.norm.cdf(-z_score)*2) < 0.5
 
-    def update(self, new_data):
+    def update_data(self, new_data):
+        self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
+
+    def update(self, new_data=None):
         """ After the selected point (see select()) is queried, insert the new info
         into dataset. Depending on the size of the dataset, the module decides whether
         to re-train the neural net (for feature extraction). 
@@ -116,10 +125,11 @@ class Optimizer(object):
         new_data -- a 1 by (m+1) array that forms the matrix [X, Y]
         """
 
-        self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
+        if not (new_data == None):
+            self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
         nobs = self.__dataset.shape[0]
 
-        if nobs < 10:
+        if nobs < 50:
             # Retrain NN if number of samples is less than 100 
             self.__architecture = (1, 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
             self.__feature_extractor.update(self.__architecture, new_data)
@@ -143,6 +153,7 @@ class Optimizer(object):
         return self.__dataset
 
 if __name__ == "__main__":
+    random.seed(42)
     # Settings
     lim_x        = [-6, 4]                                     # x range for univariate data
     nobs         = 100                                         # number of observed data
@@ -162,32 +173,41 @@ if __name__ == "__main__":
     # Instantiate Optimizer
     optimizer = Optimizer(dataset, domain)
     optimizer.train()
-    selected_point = optimizer.select_multiple()
+    selected_point = optimizer.select_multiple()[0, :]
+
+    t1 = time.time()
 
     # Select a point
-    for _ in range(100):
+    for _ in range(20):
         # print "start next point selection: " + str(selected_point)
         # Update
-        new_data = np.asarray([selected_point, g(selected_point)])
-        optimizer.update(new_data.T)
+        # new_data = np.atleast_2d(np.concatenate((selected_point, g(selected_point))))
+        new_data = evaluate(selected_point)
+        optimizer.update(new_data)
         dataset = optimizer.get_dataset()
-        selected_point = optimizer.select_multiple()
+        selected_point = optimizer.select_multiple()[0, :]
 
+
+    print "optimizer.py: final training"
     optimizer.train()
-    selected_point = optimizer.select_multiple()
+    selected_point = optimizer.select_multiple()[0, :]
 
     domain, pred, hi_ci, lo_ci, nn_pred, ei, gamma = optimizer.get_prediction()
+
+    t2 = time.time()
+
+    print "optimizer: Total update time is: %3.3f" % (t2-t1)
 
     # Plot results
     ax = plt.gca()
     true_func = np.asarray([[i, noiseless_g(i)] for i in np.linspace(lim_x[0], lim_x[1], 100)], dtype=np.float32)
     plt.plot(true_func[:, 0], true_func[:, 1], 'k', label='true', linewidth=4) # true plot
     plt.plot(domain, pred, 'c--', label='NN-LR regression', linewidth=7)
-    # plt.plot(domain, nn_pred, 'r--', label='NN regression', linewidth=7)
+    plt.plot(domain, nn_pred, 'r--', label='NN regression', linewidth=7)
     plt.plot(domain, hi_ci, 'g--', label='ci')
     plt.plot(domain, lo_ci, 'g--')
-    plt.plot(domain, ei, 'b--', label='ei')
-    plt.plot(domain, gamma, 'r', label='gamma')
+    # plt.plot(domain, ei, 'b--', label='ei')
+    # plt.plot(domain, gamma, 'r', label='gamma')
     plt.plot([selected_point, selected_point], [ax.axis()[2], ax.axis()[3]], 'r--',
              label='EI selection')
     plt.plot(dataset[:,:-1], dataset[:, -1:], 'rv', label='training', markersize=7.)

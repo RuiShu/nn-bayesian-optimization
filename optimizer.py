@@ -1,9 +1,11 @@
+import time
 import numpy as np
 import neural_net as nn
 import linear_regressor as lm
 import scipy.stats as stats
 import matplotlib.pyplot as plt
 import random
+from hidden_function import evaluate
 
 class Optimizer(object):
 
@@ -98,7 +100,7 @@ class Optimizer(object):
         self.__gamma = gamma
         self.__ei = ei
 
-        print "Best point is at: " + str(self.__domain[index, :])
+        print "optimizer.py: Best point is at: " + str(self.__domain[index, :])
         return np.array([self.__domain[index, :]])
 
     def check_point(self, selected_index, order):
@@ -173,27 +175,35 @@ if __name__ == "__main__":
     optimizer.train()
     selected_point = optimizer.select_multiple()[0, :]
 
+    t1 = time.time()
+
     # Select a point
-    for _ in range(100):
+    for _ in range(20):
         # print "start next point selection: " + str(selected_point)
         # Update
-        new_data = np.atleast_2d(np.concatenate((selected_point, g(selected_point))))
+        # new_data = np.atleast_2d(np.concatenate((selected_point, g(selected_point))))
+        new_data = evaluate(selected_point)
         optimizer.update(new_data)
         dataset = optimizer.get_dataset()
         selected_point = optimizer.select_multiple()[0, :]
 
 
+    print "optimizer.py: final training"
     optimizer.train()
     selected_point = optimizer.select_multiple()[0, :]
 
     domain, pred, hi_ci, lo_ci, nn_pred, ei, gamma = optimizer.get_prediction()
+
+    t2 = time.time()
+
+    print "optimizer: Total update time is: %3.3f" % (t2-t1)
 
     # Plot results
     ax = plt.gca()
     true_func = np.asarray([[i, noiseless_g(i)] for i in np.linspace(lim_x[0], lim_x[1], 100)], dtype=np.float32)
     plt.plot(true_func[:, 0], true_func[:, 1], 'k', label='true', linewidth=4) # true plot
     plt.plot(domain, pred, 'c--', label='NN-LR regression', linewidth=7)
-    # plt.plot(domain, nn_pred, 'r--', label='NN regression', linewidth=7)
+    plt.plot(domain, nn_pred, 'r--', label='NN regression', linewidth=7)
     plt.plot(domain, hi_ci, 'g--', label='ci')
     plt.plot(domain, lo_ci, 'g--')
     # plt.plot(domain, ei, 'b--', label='ei')

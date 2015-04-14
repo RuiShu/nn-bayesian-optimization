@@ -19,6 +19,7 @@ Worker -- compute the costly function. Returns function evaluation.
 Trainer -- in charge of handling the neural network training. 
 """
 from mpi_definitions import *
+import time 
 
 print "THE RANK IS: %d, with total size: %d" % (rank, size)
 plot_it = True
@@ -40,11 +41,10 @@ def master_process(lim_x, init_size):
 
     num_workers = size - 1
     closed_workers = 0
-    trainer_is_ready = True
 
-    print "Master starting with %d workers" % num_workers
+    print "MASTER starting with %d workers" % num_workers
 
-    init_query = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], init_size)], dtype=np.float32) # Uniform sampling
+    init_query = np.asarray([[i] for i in np.linspace(0, lim_x[1], init_size)], dtype=np.float32) # Uniform sampling
     domain = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], 100)])
 
     # Acquire an initial data set
@@ -84,27 +84,33 @@ def master_process(lim_x, init_size):
     optimizer.train()
     selected_points = optimizer.select_multiple()
     selection_size = selected_points.shape[0]
+    print "Selection size is: " + str(selection_size)
     selection_index = 0
     trainer_dataset_index = 0
     tasks_done = 0
-    tasks_total = 0
+    tasks_total = 20
+    trainer_is_ready = True
 
-    while False:
-    # while closed_workers < num_workers:
+    t1 = time.time()
+
+    # while False:
+    while closed_workers < num_workers:
         if selection_index == selection_size:
+            optimizer.update()
             selected_points = optimizer.select_multiple()
             selection_index = 0
             
         if trainer_is_ready:
             # If trainer is ready, keep shoving data at him, if there is data to be shoved
+            print "MASTER: Trainer has been activated"
             additional_dataset = dataset[trainer_dataset_index: -1, :]
             comm.send(additional_dataset, dest=TRAINER, tag=SEND_TRAINER)
             trainser_dataset_index = dataset.shape[0] - 1
             trainer_is_ready = not trainer_is_ready
 
         if not (tasks_done < tasks_total):
-            print "Master: Killing Trainer"
-            comm.send("Master has fired Trainer", dest=TRAINER, tag=EXIT_TRAINER)
+            print "MASTER: Killing Trainer"
+            comm.send("MASTER has fired Trainer", dest=TRAINER, tag=EXIT_TRAINER)
 
         data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI.ANY_TAG, status=status) # receive worker info
         source = status.Get_source() 
@@ -117,7 +123,7 @@ def master_process(lim_x, init_size):
                 comm.send(selected_points[selection_index], dest=source, tag=SEND_WORKER)
                 selection_index += 1
             else:
-                print "Master: Killing Worker"
+                print "MASTER: Killing Worker"
                 comm.send(None, dest=source, tag=EXIT_WORKER)
 
         elif tag == WORKER_DONE:
@@ -129,6 +135,7 @@ def master_process(lim_x, init_size):
 
         elif tag == TRAINER_DONE:
             # If trainer is done, store what trainer did. 
+            print "MASTER: Updating feature extractor"
             optimizer.update_feature_extractor(data)
             train_is_ready = not trainer_is_ready
 
@@ -136,7 +143,9 @@ def master_process(lim_x, init_size):
             # If worker has exited, tally up number of closed workers.
             closed_workers += 1
 
-    print "Master is done."
+    t2 = time.time()
+    print "MASTER: Total update time is: %3.3f" % (t2-t1)
+    print "MASTER: Final training"
 
     # Plot results
     if plot_it:
@@ -215,7 +224,7 @@ def worker_process(rank):
 if rank == MASTER:                         # MASTER NODE
     # Settings
     lim_x        = [-6, 4]                                     # x range for univariate data
-    init_size = 50
+    init_size = 100
     master_process(lim_x, init_size)
 
 elif rank == TRAINER:

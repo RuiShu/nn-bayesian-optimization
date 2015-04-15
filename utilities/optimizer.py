@@ -194,7 +194,7 @@ if __name__ == "__main__":
     selection_size = selected_points.shape[0]
 
     # Select a point
-    for _ in range(100):
+    for _ in range(50):
         # print "start next point selection: " + str(selected_point)
         # Update
         # new_data = np.atleast_2d(np.concatenate((selected_point, g(selected_point))))

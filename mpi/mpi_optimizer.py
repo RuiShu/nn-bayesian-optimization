@@ -152,8 +152,6 @@ def master_process(lim_x, init_size):
 
     t2 = time.time()
     print "MASTER: Total update time is: %3.3f" % (t2-t1)
-    print "MASTER: Final selection"
-
     # Plot results
     if plot_it:
         plt.gcf().set_size_inches(8, 8)
@@ -161,6 +159,8 @@ def master_process(lim_x, init_size):
         true_func = np.array(true_func)
         # optimizer.train()
         selected_point = optimizer.select_multiple()[0, :]
+        print "MASTER: Final selection: " + str(selected_point)
+    
         domain, pred, hi_ci, lo_ci, nn_pred, ei, gamma = optimizer.get_prediction()
         ax = plt.gca()
         plt.plot(true_func[:, :-1], true_func[:, -1:], 'k', 

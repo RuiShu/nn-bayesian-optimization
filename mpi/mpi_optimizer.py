@@ -96,7 +96,7 @@ def master_process(lim_x, init_size):
     trainer_is_ready = True
 
     tasks_done = 0
-    tasks_total = 100
+    tasks_total = 50
 
     # while False:
     while closed_workers < num_workers:
@@ -164,20 +164,20 @@ def master_process(lim_x, init_size):
         domain, pred, hi_ci, lo_ci, nn_pred, ei, gamma = optimizer.get_prediction()
         ax = plt.gca()
         plt.plot(true_func[:, :-1], true_func[:, -1:], 'k', 
-                 label='True function',
+                 label='True Function',
                  linewidth=3)
-        plt.plot(domain, pred, 'c', label='NN-LR regression', linewidth=3)
+        plt.plot(domain, pred, 'c', label='NN-LR Regression', linewidth=3)
         # plt.plot(domain, nn_pred, 'r--', label='NN regression', linewidth=7)
         plt.plot(domain, hi_ci, 'g--', label='Confidence Interval')
         plt.plot(domain, lo_ci, 'g--')
         # plt.plot(domain, ei, 'b--', label='ei')
         # plt.plot(domain, gamma, 'r', label='gamma')
-        plt.plot([selected_point, selected_point], [ax.axis()[2], ax.axis()[3]], 'r--',
-                 label='EI selection')
+        # plt.plot([selected_point, selected_point], [ax.axis()[2], ax.axis()[3]], 'r--',
+        #          label='EI selection')
         plt.plot(dataset[:,:-1], dataset[:, -1:], 'rv', markersize=7.)
         plt.xlabel('Hyperparameter Domain')
         plt.ylabel('Objective Function')
-        plt.title("Neural Network regression")
+        plt.title("Neural Network Regression")
         plt.legend()
         plt.savefig('figures/test_regression.eps', format='eps', dpi=2000)
 

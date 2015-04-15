@@ -77,31 +77,34 @@ class Optimizer(object):
         gamma = (prediction - np.max(train_Y)) / sig # -(min(train_Y) - prediction)/sig # finding max
         ei = sig*(gamma*stats.norm.cdf(gamma) + stats.norm.pdf(gamma))
 
-        # print "********* For each run **************"
-        # print sig[0]
-        # print prediction[0]
-        # print max(train_Y)
-        # print gamma[0]
-        ei_order = np.argsort(-1*ei, axis=0)
+        if np.max(ei) < 0:
+            sig_order = np.argsort(-sig, axis=0)
+            select_indices = sig_order[:5, 0].tolist()
+        else:
+            ei_order = np.argsort(-1*ei, axis=0)
+            select_indices = [ei_order[0, 0]]
 
-        select_indices = [ei_order[0, 0]]
+            for candidate in ei_order[:, 0]:
+                keep = True
+                for selected_index in select_indices:
+                    keep = keep*self.check_point(selected_index, candidate)
+                if keep:
+                    select_indices.append(candidate)
+                if len(select_indices) == 5: # Number of points to select
+                    break 
 
-        for candidate in ei_order[:, 0]:
-            keep = True
-            for selected_index in select_indices:
-                keep = keep*self.check_point(selected_index, candidate)
-            if keep:
-                select_indices.append(candidate)
-            if len(select_indices) == 5: # Number of points to select
-                break 
+            if len(select_indices) < 5:
+                sig_order = np.argsort(-sig, axis=0)
+                add_indices = sig_order[:(5-len(select_indices)), 0].tolist()
+                select_indices.extend(add_indices)
 
-        # print domain[select_indices, :]
         index = np.argmax(ei)
         self.__gamma = gamma
         self.__ei = ei
 
-        # print "optimizer.py: Best point is at: " + str(self.__domain[index, :])
-        return np.array([self.__domain[index, :]])
+        print "optimizer.py: Selected points are: "
+        print np.atleast_2d(self.__domain[select_indices, :])
+        return np.atleast_2d(self.__domain[select_indices, :])
 
     def check_point(self, selected_index, order):
         prediction = self.__pred
@@ -114,6 +117,7 @@ class Optimizer(object):
 
     def update_data(self, new_data):
         self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
+        # self.__feature_extractor.update_data(new_data)
 
     def update(self, new_data=None):
         """ After the selected point (see select()) is queried, insert the new info
@@ -127,6 +131,7 @@ class Optimizer(object):
 
         if not (new_data == None):
             self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
+
         nobs = self.__dataset.shape[0]
 
         if nobs < 50:
@@ -188,7 +193,7 @@ if __name__ == "__main__":
         selected_point = optimizer.select_multiple()[0, :]
 
 
-    print "optimizer.py: final training"
+    # print "optimizer.py: final training"
     optimizer.train()
     selected_point = optimizer.select_multiple()[0, :]
 

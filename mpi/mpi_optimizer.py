@@ -39,6 +39,7 @@ def master_process(lim_x, init_size):
     import random
     import matplotlib.pyplot as plt
     import utilities.optimizer as op
+    t1 = time.time()
 
     num_workers = size - 1
     closed_workers = 0
@@ -96,7 +97,6 @@ def master_process(lim_x, init_size):
 
     tasks_done = 0
     tasks_total = 100
-    t1 = time.time()
 
     # while False:
     while closed_workers < num_workers:

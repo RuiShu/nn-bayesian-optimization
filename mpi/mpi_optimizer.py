@@ -47,7 +47,7 @@ def master_process(lim_x, init_size):
     print "MASTER: starting with %d workers" % num_workers
 
     # init_query = np.asarray([[i] for i in np.linspace(0, lim_x[1], init_size)],
-    #                         dtype=np.float32) # Uniform sampling
+    #                         dtype=np.float32) # Uniform soampling
     init_query = np.asarray([[np.random.uniform(0, 1)] for _ in range(init_size)],
                             dtype=np.float32) # Random uniform sampling
     domain = np.asarray([[i] for i in np.linspace(-1, 1, 1000)])
@@ -93,7 +93,7 @@ def master_process(lim_x, init_size):
 
     selection_index = 0
     trainer_dataset_index = 0
-    trainer_is_ready = True
+    trainer_is_ready = False
 
     tasks_done = 0
     tasks_total = 50
@@ -137,6 +137,7 @@ def master_process(lim_x, init_size):
             dataset = np.concatenate((dataset, data), axis=0)
             optimizer.update_data(data)
             tasks_done += 1
+
             string = "MASTER: Number of total tasks: %3d. New data from WORKER %2d is: " % (tasks_done, source)
             print string + str(data)
 
@@ -179,7 +180,10 @@ def master_process(lim_x, init_size):
         plt.ylabel('Objective Function')
         plt.title("Neural Network Regression")
         plt.legend()
-        plt.savefig('figures/test_regression.eps', format='eps', dpi=2000)
+        time_index = str(int(time.time()))
+        figpath = 'figures/mpi_regression_' + time_index + '.eps'
+        plt.savefig(figpath, format='eps', dpi=2000)
+        # plt.show()
 
         plt.clf()
         plt.gcf().set_size_inches(8, 8)
@@ -189,8 +193,8 @@ def master_process(lim_x, init_size):
         plt.ylabel('Expected Improvement')
         plt.title("Selection Criteria")
         plt.legend()
-        plt.savefig('figures/test_expected_improvement.eps', format='eps', dpi=2000)
-
+        figpath = 'figures/mpi_expected_improvement_' + time_index + '.eps'
+        plt.savefig(figpath, format='eps', dpi=2000)
         
 
 def trainer_process():

@@ -242,4 +242,6 @@ if __name__ == "__main__":
     plt.ylabel('Output space')
     plt.title("NN-LR regression")
     plt.legend()
-    plt.show()
+    figpath = 'figures/seq_regression_' + str(int(time.time())) + '.eps'
+    plt.savefig(figpath, format='eps', dpi=2000)
+    # plt.show()

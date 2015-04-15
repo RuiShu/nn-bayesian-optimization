@@ -93,10 +93,10 @@ def master_process(lim_x, init_size):
 
     selection_index = 0
     trainer_dataset_index = 0
-    trainer_is_ready = False
+    trainer_is_ready = True
 
     tasks_done = 0
-    tasks_total = 50
+    tasks_total = 500
 
     # while False:
     while closed_workers < num_workers:
@@ -106,7 +106,7 @@ def master_process(lim_x, init_size):
             selection_size = selected_points.shape[0]
             selection_index = 0
             
-        if trainer_is_ready:
+        if trainer_is_ready and dataset[trainer_dataset_index: -1, :].shape[0] >= 100:
             # If trainer is ready, keep shoving data at him, if there is data to be shoved
             print "MASTER: Trainer has been activated"
             additional_dataset = dataset[trainer_dataset_index: -1, :]
@@ -144,7 +144,7 @@ def master_process(lim_x, init_size):
         elif tag == TRAINER_DONE:
             # If trainer is done, store what trainer did. 
             print "MASTER: Updating feature extractor"
-            optimizer.update_feature_extractor(data)
+            # optimizer.update_feature_extractor(data)
             train_is_ready = not trainer_is_ready
 
         elif tag == EXIT_WORKER or tag == EXIT_TRAINER:
@@ -207,19 +207,21 @@ def trainer_process():
         new_data = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
         tag = status.Get_tag()
         
-        if untrained_data_count > 100:
-            architecture = (1, 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
-            feature_extractor = nn.NeuralNet(architecture, dataset)
-            comm.send(feature_extractor, dest=0, tag=TRAINER_DONE)
-
         if tag == SEND_TRAINER:
             if dataset == None:
                 dataset = new_data
             else:
                 dataset = np.concatenate(dataset, new_data)
 
-            untrained_data_count += new_data.shape[0]
             nobs = dataset.shape[0]
+            print "TRAINER: Received from master"
+            print "TRAINER: Starting new feature extractor"
+            architecture = (1, 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
+            feature_extractor = nn.NeuralNet(architecture, dataset)
+            feature_extractor.train()
+            test = feature_extractor.extract_params()
+            print "TRAINER: Sending back to master"
+            comm.send(test, dest=0, tag=TRAINER_DONE)
             
         elif tag == EXIT_TRAINER:
             print "TRAINER: Commiting suicide"

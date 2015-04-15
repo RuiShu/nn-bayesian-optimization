@@ -53,6 +53,8 @@ class NeuralNet(object):
             
         self.__W = W
         self.__B = B
+        
+        return (W, B)
 
     def extract_features(self, test_X):
         W = self.__W

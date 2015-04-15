@@ -34,6 +34,7 @@ def contains_row(x, X):
     return False
 
 def master_process(lim_x, init_size):
+    from hidden_function import evaluate
     import mpi_master
     import random
     import matplotlib.pyplot as plt
@@ -88,7 +89,7 @@ def master_process(lim_x, init_size):
     selection_index = 0
     trainer_dataset_index = 0
     tasks_done = 0
-    tasks_total = 20
+    tasks_total = 100
     trainer_is_ready = True
 
     t1 = time.time()
@@ -98,6 +99,7 @@ def master_process(lim_x, init_size):
         if selection_index == selection_size:
             optimizer.update()
             selected_points = optimizer.select_multiple()
+            selection_size = selected_points.shape[0]
             selection_index = 0
             
         if trainer_is_ready:
@@ -108,7 +110,7 @@ def master_process(lim_x, init_size):
             trainser_dataset_index = dataset.shape[0] - 1
             trainer_is_ready = not trainer_is_ready
 
-        if not (tasks_done < tasks_total):
+        if tasks_done == tasks_total:
             print "MASTER: Killing Trainer"
             comm.send("MASTER has fired Trainer", dest=TRAINER, tag=EXIT_TRAINER)
 
@@ -123,7 +125,7 @@ def master_process(lim_x, init_size):
                 comm.send(selected_points[selection_index], dest=source, tag=SEND_WORKER)
                 selection_index += 1
             else:
-                print "MASTER: Killing Worker"
+                print "MASTER: Killing Worker %2d" % source
                 comm.send(None, dest=source, tag=EXIT_WORKER)
 
         elif tag == WORKER_DONE:
@@ -131,7 +133,8 @@ def master_process(lim_x, init_size):
             dataset = np.concatenate((dataset, data), axis=0)
             optimizer.update_data(data)
             tasks_done += 1
-            print "Number of total tasks: %d" % tasks_done
+            string = "MASTER: Number of total tasks: %3d. New data from WORKER %2d is: " % (tasks_done, source)
+            print string + str(data)
 
         elif tag == TRAINER_DONE:
             # If trainer is done, store what trainer did. 
@@ -145,14 +148,19 @@ def master_process(lim_x, init_size):
 
     t2 = time.time()
     print "MASTER: Total update time is: %3.3f" % (t2-t1)
-    print "MASTER: Final training"
+    print "MASTER: Final selection"
 
     # Plot results
     if plot_it:
+        true_func = [evaluate(domain[i, :])[0, :].tolist() for i in range(domain.shape[0])]
+        true_func = np.array(true_func)
         optimizer.train()
         selected_point = optimizer.select_multiple()[0, :]
         domain, pred, hi_ci, lo_ci, nn_pred, ei, gamma = optimizer.get_prediction()
         ax = plt.gca()
+        plt.plot(true_func[:, :-1], true_func[:, -1:], 'k', 
+                 label='True function',
+                 linewidth=5)
         plt.plot(domain, pred, 'c--', label='NN-LR regression', linewidth=7)
         plt.plot(domain, nn_pred, 'r--', label='NN regression', linewidth=7)
         plt.plot(domain, hi_ci, 'g--', label='ci')
@@ -167,7 +175,6 @@ def master_process(lim_x, init_size):
         plt.title("NN-LR regression")
         plt.legend()
         plt.show()
-
 
 def trainer_process():
     import neural_net as nn
@@ -209,14 +216,14 @@ def worker_process(rank):
         tag = status.Get_tag()
 
         if tag == SEND_WORKER:
-            statement = "WORKER %3d: The query is: " % rank
-            print statement + str(query)  
+            # string = "WORKER %3d: The query is: " % rank
+            # print string + str(query)  
             result = evaluate(query)
             comm.send(result, dest=0, tag=WORKER_DONE)
 
         elif tag == EXIT_WORKER:
             # Worker dies!
-            print "WORKER: Commiting suicide"
+            print "WORKER: Worker %2d commiting suicide" % rank
             break
 
     comm.send(None, dest=0, tag=EXIT_WORKER) # Suicide complete
@@ -224,7 +231,7 @@ def worker_process(rank):
 if rank == MASTER:                         # MASTER NODE
     # Settings
     lim_x        = [-6, 4]                                     # x range for univariate data
-    init_size = 100
+    init_size = 50
     master_process(lim_x, init_size)
 
 elif rank == TRAINER:

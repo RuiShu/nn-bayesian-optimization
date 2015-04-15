@@ -100,7 +100,7 @@ class Optimizer(object):
         self.__gamma = gamma
         self.__ei = ei
 
-        print "optimizer.py: Best point is at: " + str(self.__domain[index, :])
+        # print "optimizer.py: Best point is at: " + str(self.__domain[index, :])
         return np.array([self.__domain[index, :]])
 
     def check_point(self, selected_index, order):
@@ -156,7 +156,7 @@ if __name__ == "__main__":
     random.seed(42)
     # Settings
     lim_x        = [-6, 4]                                     # x range for univariate data
-    nobs         = 100                                         # number of observed data
+    nobs         = 50                                         # number of observed data
     architecture = (1, 50, nobs-2 if nobs < 50 else 50, 1) # Define NN layer architecture
     # g            = lambda x: np.exp(-x)*np.sin(10*x)*x-10*x**2 + np.random.randn()/10 # Define the hidden function
     # noiseless_g  = lambda x: np.exp(-x)*np.sin(10*x)*x-10*x**2             
@@ -178,7 +178,7 @@ if __name__ == "__main__":
     t1 = time.time()
 
     # Select a point
-    for _ in range(20):
+    for _ in range(100):
         # print "start next point selection: " + str(selected_point)
         # Update
         # new_data = np.atleast_2d(np.concatenate((selected_point, g(selected_point))))

@@ -175,14 +175,16 @@ if __name__ == "__main__":
     # Create dataset
     
     # dataset_X = np.asarray([[i] for i in np.linspace(0, lim_x[1], nobs)], dtype=np.float32) # Uniform sampling
-    dataset_X = np.asarray([[np.random.uniform(0, lim_x[1])] for _ in range(nobs)],
+    scale = np.max(np.abs(lim_x))
+
+    dataset_X = np.asarray([[np.random.uniform(0, 1)] for _ in range(nobs)],
                             dtype=np.float32) # Random uniform sampling
-    dataset = evaluate(dataset_X[0, :])
+    dataset = evaluate(dataset_X[0, :], scale)
 
     for i in range(1, dataset_X.shape[0]):
-        dataset = np.concatenate((dataset, evaluate(dataset_X[i, :])))
+        dataset = np.concatenate((dataset, evaluate(dataset_X[i, :], scale)))
 
-    domain = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], 1000)])
+    domain = np.asarray([[i] for i in np.linspace(-1, 1, 1000)])
     
     # Instantiate Optimizer
     optimizer = Optimizer(dataset, domain)
@@ -202,7 +204,7 @@ if __name__ == "__main__":
             selection_size = selected_points.shape[0]
             selection_index = 0
             
-        new_data = evaluate(selected_points[selection_index, :])
+        new_data = evaluate(selected_points[selection_index, :], scale)
         print "New evaluation: " + str(new_data)
         selection_index += 1
         optimizer.update_data(new_data)
@@ -221,8 +223,8 @@ if __name__ == "__main__":
 
     # Plot results
     ax = plt.gca()
-    true_func = np.asarray([[i, noiseless_g(i)] for i in np.linspace(lim_x[0], lim_x[1], 100)], dtype=np.float32)
-    plt.plot(true_func[:, 0], true_func[:, 1], 'k', label='true', linewidth=4) # true plot
+    # true_func = np.asarray([[i, noiseless_g(i)] for i in np.linspace(lim_x[0], lim_x[1], 100)], dtype=np.float32)
+    # plt.plot(true_func[:, 0], true_func[:, 1], 'k', label='true', linewidth=4) # true plot
     plt.plot(domain, pred, 'c--', label='NN-LR regression', linewidth=7)
     plt.plot(domain, nn_pred, 'r--', label='NN regression', linewidth=7)
     plt.plot(domain, hi_ci, 'g--', label='ci')

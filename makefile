@@ -1,6 +1,6 @@
 all:
 	python optimizer.py
 par:
-	mpiexec -np 4 python mpi_optimizer.py
+	mpiexec -np 4 python -m mpi.mpi_optimizer
 clean:
 	rm *pyc

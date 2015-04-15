@@ -5,7 +5,7 @@ import linear_regressor as lm
 import scipy.stats as stats
 import matplotlib.pyplot as plt
 import random
-from learning_objective.hidden_function import evaluate
+from learning_objective.hidden_function import evaluate, true_evaluate
 
 class Optimizer(object):
 
@@ -223,10 +223,14 @@ if __name__ == "__main__":
 
     # Plot results
     ax = plt.gca()
+    true_func = [true_evaluate(domain[i, :], scale)[0, :].tolist() for i in range(domain.shape[0])]
+    true_func = np.array(true_func)
+
     # true_func = np.asarray([[i, noiseless_g(i)] for i in np.linspace(lim_x[0], lim_x[1], 100)], dtype=np.float32)
-    # plt.plot(true_func[:, 0], true_func[:, 1], 'k', label='true', linewidth=4) # true plot
-    plt.plot(domain, pred, 'c--', label='NN-LR regression', linewidth=7)
-    plt.plot(domain, nn_pred, 'r--', label='NN regression', linewidth=7)
+    plt.plot(true_func[:, 0], true_func[:, 1], 'k', label='true', linewidth=3) # true plot
+    plt.plot(domain, pred, 'c', label='NN-LR regression', linewidth=3)
+    # plt.plot(domain, pred, 'c--', label='NN-LR regression', linewidth=7)
+    plt.plot(domain, nn_pred, 'r', label='NN regression', linewidth=3)
     plt.plot(domain, hi_ci, 'g--', label='ci')
     plt.plot(domain, lo_ci, 'g--')
     # plt.plot(domain, ei, 'b--', label='ei')

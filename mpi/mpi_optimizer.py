@@ -47,7 +47,7 @@ def master_process(lim_x, init_size):
     print "MASTER: starting with %d workers" % num_workers
 
     # init_query = np.asarray([[i] for i in np.linspace(0, lim_x[1], init_size)],
-    #                         dtype=np.float32) # Uniform sampling
+    #                         dtype=np.float32) # Uniform soampling
     init_query = np.asarray([[np.random.uniform(0, 1)] for _ in range(init_size)],
                             dtype=np.float32) # Random uniform sampling
     domain = np.asarray([[i] for i in np.linspace(-1, 1, 1000)])
@@ -93,10 +93,10 @@ def master_process(lim_x, init_size):
 
     selection_index = 0
     trainer_dataset_index = 0
-    trainer_is_ready = True
+    trainer_is_ready = False
 
     tasks_done = 0
-    tasks_total = 100
+    tasks_total = 50
 
     # while False:
     while closed_workers < num_workers:
@@ -137,6 +137,7 @@ def master_process(lim_x, init_size):
             dataset = np.concatenate((dataset, data), axis=0)
             optimizer.update_data(data)
             tasks_done += 1
+
             string = "MASTER: Number of total tasks: %3d. New data from WORKER %2d is: " % (tasks_done, source)
             print string + str(data)
 
@@ -152,8 +153,6 @@ def master_process(lim_x, init_size):
 
     t2 = time.time()
     print "MASTER: Total update time is: %3.3f" % (t2-t1)
-    print "MASTER: Final selection"
-
     # Plot results
     if plot_it:
         plt.gcf().set_size_inches(8, 8)
@@ -161,25 +160,30 @@ def master_process(lim_x, init_size):
         true_func = np.array(true_func)
         # optimizer.train()
         selected_point = optimizer.select_multiple()[0, :]
+        print "MASTER: Final selection: " + str(selected_point)
+    
         domain, pred, hi_ci, lo_ci, nn_pred, ei, gamma = optimizer.get_prediction()
         ax = plt.gca()
         plt.plot(true_func[:, :-1], true_func[:, -1:], 'k', 
-                 label='True function',
+                 label='True Function',
                  linewidth=3)
-        plt.plot(domain, pred, 'c', label='NN-LR regression', linewidth=3)
+        plt.plot(domain, pred, 'c', label='NN-LR Regression', linewidth=3)
         # plt.plot(domain, nn_pred, 'r--', label='NN regression', linewidth=7)
         plt.plot(domain, hi_ci, 'g--', label='Confidence Interval')
         plt.plot(domain, lo_ci, 'g--')
         # plt.plot(domain, ei, 'b--', label='ei')
         # plt.plot(domain, gamma, 'r', label='gamma')
-        plt.plot([selected_point, selected_point], [ax.axis()[2], ax.axis()[3]], 'r--',
-                 label='EI selection')
+        # plt.plot([selected_point, selected_point], [ax.axis()[2], ax.axis()[3]], 'r--',
+        #          label='EI selection')
         plt.plot(dataset[:,:-1], dataset[:, -1:], 'rv', markersize=7.)
         plt.xlabel('Hyperparameter Domain')
         plt.ylabel('Objective Function')
-        plt.title("Neural Network regression")
+        plt.title("Neural Network Regression")
         plt.legend()
-        plt.savefig('figures/test_regression.eps', format='eps', dpi=2000)
+        time_index = str(int(time.time()))
+        figpath = 'figures/mpi_regression_' + time_index + '.eps'
+        plt.savefig(figpath, format='eps', dpi=2000)
+        # plt.show()
 
         plt.clf()
         plt.gcf().set_size_inches(8, 8)
@@ -189,8 +193,8 @@ def master_process(lim_x, init_size):
         plt.ylabel('Expected Improvement')
         plt.title("Selection Criteria")
         plt.legend()
-        plt.savefig('figures/test_expected_improvement.eps', format='eps', dpi=2000)
-
+        figpath = 'figures/mpi_expected_improvement_' + time_index + '.eps'
+        plt.savefig(figpath, format='eps', dpi=2000)
         
 
 def trainer_process():

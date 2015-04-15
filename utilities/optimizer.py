@@ -5,7 +5,7 @@ import linear_regressor as lm
 import scipy.stats as stats
 import matplotlib.pyplot as plt
 import random
-from hidden_function import evaluate
+from learning_objective.hidden_function import evaluate
 
 class Optimizer(object):
 
@@ -77,9 +77,10 @@ class Optimizer(object):
         gamma = (prediction - np.max(train_Y)) / sig # -(min(train_Y) - prediction)/sig # finding max
         ei = sig*(gamma*stats.norm.cdf(gamma) + stats.norm.pdf(gamma))
 
-        if np.max(ei) < 0:
+        if np.max(ei) <= 0:
             sig_order = np.argsort(-sig, axis=0)
             select_indices = sig_order[:5, 0].tolist()
+            print "optimizer.py: Pure exploration"
         else:
             ei_order = np.argsort(-1*ei, axis=0)
             select_indices = [ei_order[0, 0]]
@@ -88,22 +89,24 @@ class Optimizer(object):
                 keep = True
                 for selected_index in select_indices:
                     keep = keep*self.check_point(selected_index, candidate)
-                if keep:
+                if keep and ei[candidate, 0] > 0:
                     select_indices.append(candidate)
                 if len(select_indices) == 5: # Number of points to select
                     break 
 
             if len(select_indices) < 5:
+                print "optimizer.py: Exploration appended"
                 sig_order = np.argsort(-sig, axis=0)
                 add_indices = sig_order[:(5-len(select_indices)), 0].tolist()
                 select_indices.extend(add_indices)
+            else:
+                print "optimizer.py: All expected"
 
         index = np.argmax(ei)
         self.__gamma = gamma
         self.__ei = ei
 
-        print "optimizer.py: Selected points are: "
-        print np.atleast_2d(self.__domain[select_indices, :])
+        # print np.atleast_2d(self.__domain[select_indices, :])
         return np.atleast_2d(self.__domain[select_indices, :])
 
     def check_point(self, selected_index, order):
@@ -117,7 +120,7 @@ class Optimizer(object):
 
     def update_data(self, new_data):
         self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
-        # self.__feature_extractor.update_data(new_data)
+        self.__feature_extractor.update_data(new_data)
 
     def update(self, new_data=None):
         """ After the selected point (see select()) is queried, insert the new info
@@ -158,6 +161,7 @@ class Optimizer(object):
         return self.__dataset
 
 if __name__ == "__main__":
+    t1 = time.time()
     random.seed(42)
     # Settings
     lim_x        = [-6, 4]                                     # x range for univariate data
@@ -170,31 +174,43 @@ if __name__ == "__main__":
 
     # Create dataset
     
-    dataset_X = np.asarray([[i] for i in np.linspace(0, lim_x[1], nobs)], dtype=np.float32) # Uniform sampling
-    dataset_Y = np.asarray([[g(dataset_X[i, :])[0]] for i in range(dataset_X.shape[0])])
-    domain = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], 100)])
-    dataset = np.concatenate((dataset_X, dataset_Y), axis=1)
+    # dataset_X = np.asarray([[i] for i in np.linspace(0, lim_x[1], nobs)], dtype=np.float32) # Uniform sampling
+    dataset_X = np.asarray([[np.random.uniform(0, lim_x[1])] for _ in range(nobs)],
+                            dtype=np.float32) # Random uniform sampling
+    dataset = evaluate(dataset_X[0, :])
+
+    for i in range(1, dataset_X.shape[0]):
+        dataset = np.concatenate((dataset, evaluate(dataset_X[i, :])))
+
+    domain = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], 1000)])
     
     # Instantiate Optimizer
     optimizer = Optimizer(dataset, domain)
     optimizer.train()
-    selected_point = optimizer.select_multiple()[0, :]
-
-    t1 = time.time()
+    selected_points = optimizer.select_multiple()
+    selection_index = 0
+    selection_size = selected_points.shape[0]
 
     # Select a point
     for _ in range(100):
         # print "start next point selection: " + str(selected_point)
         # Update
         # new_data = np.atleast_2d(np.concatenate((selected_point, g(selected_point))))
-        new_data = evaluate(selected_point)
-        optimizer.update(new_data)
-        dataset = optimizer.get_dataset()
-        selected_point = optimizer.select_multiple()[0, :]
+        if selection_index == selection_size:
+            optimizer.update()
+            selected_points = optimizer.select_multiple()
+            selection_size = selected_points.shape[0]
+            selection_index = 0
+            
+        new_data = evaluate(selected_points[selection_index, :])
+        print "New evaluation: " + str(new_data)
+        selection_index += 1
+        optimizer.update_data(new_data)
 
 
     # print "optimizer.py: final training"
-    optimizer.train()
+    # optimizer.train()
+    dataset = optimizer.get_dataset()
     selected_point = optimizer.select_multiple()[0, :]
 
     domain, pred, hi_ci, lo_ci, nn_pred, ei, gamma = optimizer.get_prediction()

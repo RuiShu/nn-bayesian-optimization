@@ -34,19 +34,23 @@ def contains_row(x, X):
     return False
 
 def master_process(lim_x, init_size):
-    from hidden_function import evaluate
+    from learning_objective.hidden_function import evaluate, true_evaluate
     import mpi_master
     import random
     import matplotlib.pyplot as plt
-    import optimizer as op
+    import utilities.optimizer as op
+    t1 = time.time()
 
     num_workers = size - 1
     closed_workers = 0
 
     print "MASTER starting with %d workers" % num_workers
 
-    init_query = np.asarray([[i] for i in np.linspace(0, lim_x[1], init_size)], dtype=np.float32) # Uniform sampling
-    domain = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], 100)])
+    # init_query = np.asarray([[i] for i in np.linspace(0, lim_x[1], init_size)],
+    #                         dtype=np.float32) # Uniform sampling
+    init_query = np.asarray([[np.random.uniform(0, lim_x[1])] for _ in range(init_size)],
+                            dtype=np.float32) # Random uniform sampling
+    domain = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], 1000)])
 
     # Acquire an initial data set
     tasks_assigned = 0
@@ -86,13 +90,13 @@ def master_process(lim_x, init_size):
     selected_points = optimizer.select_multiple()
     selection_size = selected_points.shape[0]
     print "Selection size is: " + str(selection_size)
+
     selection_index = 0
     trainer_dataset_index = 0
-    tasks_done = 0
-    tasks_total = 100
     trainer_is_ready = True
 
-    t1 = time.time()
+    tasks_done = 0
+    tasks_total = 100
 
     # while False:
     while closed_workers < num_workers:
@@ -152,32 +156,44 @@ def master_process(lim_x, init_size):
 
     # Plot results
     if plot_it:
-        true_func = [evaluate(domain[i, :])[0, :].tolist() for i in range(domain.shape[0])]
+        plt.gcf().set_size_inches(8, 8)
+        true_func = [true_evaluate(domain[i, :])[0, :].tolist() for i in range(domain.shape[0])]
         true_func = np.array(true_func)
-        optimizer.train()
+        # optimizer.train()
         selected_point = optimizer.select_multiple()[0, :]
         domain, pred, hi_ci, lo_ci, nn_pred, ei, gamma = optimizer.get_prediction()
         ax = plt.gca()
         plt.plot(true_func[:, :-1], true_func[:, -1:], 'k', 
                  label='True function',
-                 linewidth=5)
-        plt.plot(domain, pred, 'c--', label='NN-LR regression', linewidth=7)
-        plt.plot(domain, nn_pred, 'r--', label='NN regression', linewidth=7)
+                 linewidth=3)
+        plt.plot(domain, pred, 'c', label='NN-LR regression', linewidth=3)
+        # plt.plot(domain, nn_pred, 'r--', label='NN regression', linewidth=7)
         plt.plot(domain, hi_ci, 'g--', label='ci')
         plt.plot(domain, lo_ci, 'g--')
         # plt.plot(domain, ei, 'b--', label='ei')
         # plt.plot(domain, gamma, 'r', label='gamma')
-        plt.plot([selected_point, selected_point], [ax.axis()[2], ax.axis()[3]], 'r--',
-                 label='EI selection')
+        # plt.plot([selected_point, selected_point], [ax.axis()[2], ax.axis()[3]], 'r--',
+        #          label='EI selection')
         plt.plot(dataset[:,:-1], dataset[:, -1:], 'rv', label='training', markersize=7.)
         plt.xlabel('Input space')
         plt.ylabel('Output space')
         plt.title("NN-LR regression")
         plt.legend()
-        plt.show()
+        plt.savefig('figures/regression.eps', format='eps', dpi=2000)
+
+        plt.clf()
+        plt.gcf().set_size_inches(8, 8)
+        plt.plot(domain, ei, 'r', label='Expected Improvement')
+        plt.xlabel('Input space')
+        plt.ylabel('Output space')
+        plt.title("Expected Improvement")
+        plt.legend()
+        plt.savefig('figures/expected_improvement.eps', format='eps', dpi=2000)
+
+        
 
 def trainer_process():
-    import neural_net as nn
+    import utilities.neural_net as nn
     nobs = 0
     dataset = None
     untrained_data_count = 0
@@ -208,7 +224,7 @@ def trainer_process():
 
 
 def worker_process(rank):
-    from hidden_function import evaluate
+    from learning_objective.hidden_function import evaluate
 
     while True:
         comm.send("WORKER is ready", dest=0, tag=WORKER_READY)    # tell Master node that I need a new query

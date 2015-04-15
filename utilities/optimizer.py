@@ -5,7 +5,7 @@ import linear_regressor as lm
 import scipy.stats as stats
 import matplotlib.pyplot as plt
 import random
-from hidden_function import evaluate
+from learning_objective.hidden_function import evaluate
 
 class Optimizer(object):
 
@@ -137,7 +137,6 @@ class Optimizer(object):
 
         if nobs < 50:
             # Retrain NN if number of samples is less than 100 
-            print new_data
             self.__architecture = (1, 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
             self.__feature_extractor.update(self.__architecture, new_data)
 

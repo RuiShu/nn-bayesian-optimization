@@ -44,7 +44,7 @@ def master_process(lim_x, init_size):
     num_workers = size - 1
     closed_workers = 0
 
-    print "MASTER starting with %d workers" % num_workers
+    print "MASTER: starting with %d workers" % num_workers
 
     # init_query = np.asarray([[i] for i in np.linspace(0, lim_x[1], init_size)],
     #                         dtype=np.float32) # Uniform sampling
@@ -168,25 +168,25 @@ def master_process(lim_x, init_size):
                  linewidth=3)
         plt.plot(domain, pred, 'c', label='NN-LR regression', linewidth=3)
         # plt.plot(domain, nn_pred, 'r--', label='NN regression', linewidth=7)
-        plt.plot(domain, hi_ci, 'g--', label='ci')
+        plt.plot(domain, hi_ci, 'g--', label='Confidence Interval')
         plt.plot(domain, lo_ci, 'g--')
         # plt.plot(domain, ei, 'b--', label='ei')
         # plt.plot(domain, gamma, 'r', label='gamma')
         # plt.plot([selected_point, selected_point], [ax.axis()[2], ax.axis()[3]], 'r--',
         #          label='EI selection')
         plt.plot(dataset[:,:-1], dataset[:, -1:], 'rv', label='training', markersize=7.)
-        plt.xlabel('Input space')
-        plt.ylabel('Output space')
-        plt.title("NN-LR regression")
+        plt.xlabel('Hyperparameter Domain')
+        plt.ylabel('Objective Function')
+        plt.title("Neural Network regression")
         plt.legend()
         plt.savefig('figures/regression.eps', format='eps', dpi=2000)
 
         plt.clf()
         plt.gcf().set_size_inches(8, 8)
         plt.plot(domain, ei, 'r', label='Expected Improvement')
-        plt.xlabel('Input space')
-        plt.ylabel('Output space')
-        plt.title("Expected Improvement")
+        plt.xlabel('Hyperparameter Domain')
+        plt.ylabel('Expected Improvement')
+        plt.title("Selection Criteria")
         plt.legend()
         plt.savefig('figures/expected_improvement.eps', format='eps', dpi=2000)
 

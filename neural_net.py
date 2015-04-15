@@ -74,8 +74,13 @@ class NeuralNet(object):
 
         return X
 
-    def update(self, architecture, new_data):
+    def update_data(self, new_data):
         self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
+
+    def update(self, architecture, new_data=None):
+        if not (new_data == None):
+            self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
+
         self.__architecture = architecture
         self.train()
 

@@ -245,7 +245,7 @@ def worker_process(lim_x, rank):
 
     comm.send(None, dest=0, tag=EXIT_WORKER) # Suicide complete
     
-lim_x        = [-6, 4]                                     # x range for univariate data
+lim_x        = [-6, 6]                                     # x range for univariate data
 
 if rank == MASTER:                         # MASTER NODE
     # Settings

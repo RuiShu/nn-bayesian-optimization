@@ -77,9 +77,10 @@ class Optimizer(object):
         gamma = (prediction - np.max(train_Y)) / sig # -(min(train_Y) - prediction)/sig # finding max
         ei = sig*(gamma*stats.norm.cdf(gamma) + stats.norm.pdf(gamma))
 
-        if np.max(ei) < 0:
+        if np.max(ei) <= 0:
             sig_order = np.argsort(-sig, axis=0)
             select_indices = sig_order[:5, 0].tolist()
+            print "optimizer.py: Pure exploration"
         else:
             ei_order = np.argsort(-1*ei, axis=0)
             select_indices = [ei_order[0, 0]]
@@ -94,6 +95,7 @@ class Optimizer(object):
                     break 
 
             if len(select_indices) < 5:
+                print "optimizer.py: Exploration appended"
                 sig_order = np.argsort(-sig, axis=0)
                 add_indices = sig_order[:(5-len(select_indices)), 0].tolist()
                 select_indices.extend(add_indices)
@@ -102,8 +104,7 @@ class Optimizer(object):
         self.__gamma = gamma
         self.__ei = ei
 
-        print "optimizer.py: Selected points are: "
-        print np.atleast_2d(self.__domain[select_indices, :])
+        # print np.atleast_2d(self.__domain[select_indices, :])
         return np.atleast_2d(self.__domain[select_indices, :])
 
     def check_point(self, selected_index, order):
@@ -117,7 +118,7 @@ class Optimizer(object):
 
     def update_data(self, new_data):
         self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
-        # self.__feature_extractor.update_data(new_data)
+        self.__feature_extractor.update_data(new_data)
 
     def update(self, new_data=None):
         """ After the selected point (see select()) is queried, insert the new info
@@ -136,6 +137,7 @@ class Optimizer(object):
 
         if nobs < 50:
             # Retrain NN if number of samples is less than 100 
+            print new_data
             self.__architecture = (1, 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
             self.__feature_extractor.update(self.__architecture, new_data)
 
@@ -170,9 +172,12 @@ if __name__ == "__main__":
 
     # Create dataset
     
-    dataset_X = np.asarray([[i] for i in np.linspace(0, lim_x[1], nobs)], dtype=np.float32) # Uniform sampling
+    # dataset_X = np.asarray([[i] for i in np.linspace(0, lim_x[1], nobs)], dtype=np.float32) # Uniform sampling
+    dataset_X = np.asarray([[np.random.uniform(0, lim_x[1])] for _ in range(init_size)],
+                            dtype=np.float32) # Random uniform sampling
+
     dataset_Y = np.asarray([[g(dataset_X[i, :])[0]] for i in range(dataset_X.shape[0])])
-    domain = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], 100)])
+    domain = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], 1000)])
     dataset = np.concatenate((dataset_X, dataset_Y), axis=1)
     
     # Instantiate Optimizer

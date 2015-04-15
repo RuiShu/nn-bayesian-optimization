@@ -40,7 +40,7 @@ def master_process(lim_x, init_size):
     import matplotlib.pyplot as plt
     import utilities.optimizer as op
     t1 = time.time()
-
+    scale = np.max(np.abs(lim_x))
     num_workers = size - 1
     closed_workers = 0
 
@@ -48,9 +48,9 @@ def master_process(lim_x, init_size):
 
     # init_query = np.asarray([[i] for i in np.linspace(0, lim_x[1], init_size)],
     #                         dtype=np.float32) # Uniform sampling
-    init_query = np.asarray([[np.random.uniform(0, lim_x[1])] for _ in range(init_size)],
+    init_query = np.asarray([[np.random.uniform(0, 1)] for _ in range(init_size)],
                             dtype=np.float32) # Random uniform sampling
-    domain = np.asarray([[i] for i in np.linspace(lim_x[0], lim_x[1], 1000)])
+    domain = np.asarray([[i] for i in np.linspace(-1, 1, 1000)])
 
     # Acquire an initial data set
     tasks_assigned = 0
@@ -157,7 +157,7 @@ def master_process(lim_x, init_size):
     # Plot results
     if plot_it:
         plt.gcf().set_size_inches(8, 8)
-        true_func = [true_evaluate(domain[i, :])[0, :].tolist() for i in range(domain.shape[0])]
+        true_func = [true_evaluate(domain[i, :], scale)[0, :].tolist() for i in range(domain.shape[0])]
         true_func = np.array(true_func)
         # optimizer.train()
         selected_point = optimizer.select_multiple()[0, :]
@@ -172,23 +172,24 @@ def master_process(lim_x, init_size):
         plt.plot(domain, lo_ci, 'g--')
         # plt.plot(domain, ei, 'b--', label='ei')
         # plt.plot(domain, gamma, 'r', label='gamma')
-        # plt.plot([selected_point, selected_point], [ax.axis()[2], ax.axis()[3]], 'r--',
-        #          label='EI selection')
-        plt.plot(dataset[:,:-1], dataset[:, -1:], 'rv', label='training', markersize=7.)
+        plt.plot([selected_point, selected_point], [ax.axis()[2], ax.axis()[3]], 'r--',
+                 label='EI selection')
+        plt.plot(dataset[:,:-1], dataset[:, -1:], 'rv', markersize=7.)
         plt.xlabel('Hyperparameter Domain')
         plt.ylabel('Objective Function')
         plt.title("Neural Network regression")
         plt.legend()
-        plt.savefig('figures/regression.eps', format='eps', dpi=2000)
+        plt.savefig('figures/test_regression.eps', format='eps', dpi=2000)
 
         plt.clf()
         plt.gcf().set_size_inches(8, 8)
         plt.plot(domain, ei, 'r', label='Expected Improvement')
+        plt.plot(domain, ((hi_ci-pred)/2)**2, 'g', label='Variance')
         plt.xlabel('Hyperparameter Domain')
         plt.ylabel('Expected Improvement')
         plt.title("Selection Criteria")
         plt.legend()
-        plt.savefig('figures/expected_improvement.eps', format='eps', dpi=2000)
+        plt.savefig('figures/test_expected_improvement.eps', format='eps', dpi=2000)
 
         
 
@@ -223,9 +224,9 @@ def trainer_process():
     comm.send(None, dest=0, tag=EXIT_TRAINER) # Suicide complete
 
 
-def worker_process(rank):
+def worker_process(lim_x, rank):
     from learning_objective.hidden_function import evaluate
-
+    scale = np.max(np.abs(lim_x))
     while True:
         comm.send("WORKER is ready", dest=0, tag=WORKER_READY)    # tell Master node that I need a new query
         query  = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
@@ -234,7 +235,7 @@ def worker_process(rank):
         if tag == SEND_WORKER:
             # string = "WORKER %3d: The query is: " % rank
             # print string + str(query)  
-            result = evaluate(query)
+            result = evaluate(query, scale)
             comm.send(result, dest=0, tag=WORKER_DONE)
 
         elif tag == EXIT_WORKER:
@@ -244,13 +245,14 @@ def worker_process(rank):
 
     comm.send(None, dest=0, tag=EXIT_WORKER) # Suicide complete
     
+lim_x        = [-6, 4]                                     # x range for univariate data
+
 if rank == MASTER:                         # MASTER NODE
     # Settings
-    lim_x        = [-6, 4]                                     # x range for univariate data
     init_size = 50
     master_process(lim_x, init_size)
 
 elif rank == TRAINER:
     trainer_process()
 else:
-    worker_process(rank)
+    worker_process(lim_x, rank)

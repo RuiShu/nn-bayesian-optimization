@@ -9,3 +9,4 @@ push:
 	git pull origin master
 	git merge development
 	git push origin master
+	git checkout development

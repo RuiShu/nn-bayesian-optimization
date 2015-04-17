@@ -17,7 +17,7 @@ class Optimizer(object):
         """
         self.__dataset = dataset
         nobs = dataset.shape[0]
-        self.__architecture = (1, 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
+        self.__architecture = (domain.shape[1], 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
         self.__feature_extractor = nn.NeuralNet(self.__architecture, dataset)
         self.__domain = domain
 
@@ -164,9 +164,10 @@ if __name__ == "__main__":
     t1 = time.time()
     random.seed(42)
     # Settings
-    lim_x        = [-6, 4]                                     # x range for univariate data
+    lim_domain = np.array([[-1, -1],
+                           [ 1,  1]])                                     # x range for univariate data
     nobs         = 50                                         # number of observed data
-    architecture = (1, 50, nobs-2 if nobs < 50 else 50, 1) # Define NN layer architecture
+
     # g            = lambda x: np.exp(-x)*np.sin(10*x)*x-10*x**2 + np.random.randn()/10 # Define the hidden function
     # noiseless_g  = lambda x: np.exp(-x)*np.sin(10*x)*x-10*x**2             
     noiseless_g  = lambda x: 10*np.sin(x) - x
@@ -174,18 +175,16 @@ if __name__ == "__main__":
 
     # Create dataset
     
-    # dataset_X = np.asarray([[i] for i in np.linspace(0, lim_x[1], nobs)], dtype=np.float32) # Uniform sampling
-    scale = np.max(np.abs(lim_x))
+    # dataset_X = np.asarray([[i] for i in np.linspace(0, lim_domain[1], nobs)], dtype=np.float32) # Uniform sampling
+    dataset_X = np.random.uniform(-1, 1, size=(nobs, lim_domain.shape[1]))
 
-    dataset_X = np.asarray([[np.random.uniform(0, 1)] for _ in range(nobs)],
-                            dtype=np.float32) # Random uniform sampling
-    dataset = evaluate(dataset_X[0, :], scale)
+    dataset = evaluate(dataset_X[0, :], lim_domain)
 
     for i in range(1, dataset_X.shape[0]):
-        dataset = np.concatenate((dataset, evaluate(dataset_X[i, :], scale)))
+        dataset = np.concatenate((dataset, evaluate(dataset_X[i, :], lim_domain)))
 
-    domain = np.asarray([[i] for i in np.linspace(-1, 1, 1000)])
-    
+    domain = dataset[:, :-1]
+
     # Instantiate Optimizer
     optimizer = Optimizer(dataset, domain)
     optimizer.train()
@@ -204,7 +203,7 @@ if __name__ == "__main__":
             selection_size = selected_points.shape[0]
             selection_index = 0
             
-        new_data = evaluate(selected_points[selection_index, :], scale)
+        new_data = evaluate(selected_points[selection_index, :], lim_domain)
         print "New evaluation: " + str(new_data)
         selection_index += 1
         optimizer.update_data(new_data)
@@ -222,26 +221,27 @@ if __name__ == "__main__":
     print "optimizer: Total update time is: %3.3f" % (t2-t1)
 
     # Plot results
-    ax = plt.gca()
-    true_func = [true_evaluate(domain[i, :], scale)[0, :].tolist() for i in range(domain.shape[0])]
-    true_func = np.array(true_func)
-
-    # true_func = np.asarray([[i, noiseless_g(i)] for i in np.linspace(lim_x[0], lim_x[1], 100)], dtype=np.float32)
-    plt.plot(true_func[:, 0], true_func[:, 1], 'k', label='true', linewidth=3) # true plot
-    plt.plot(domain, pred, 'c', label='NN-LR regression', linewidth=3)
-    # plt.plot(domain, pred, 'c--', label='NN-LR regression', linewidth=7)
-    plt.plot(domain, nn_pred, 'r', label='NN regression', linewidth=3)
-    plt.plot(domain, hi_ci, 'g--', label='ci')
-    plt.plot(domain, lo_ci, 'g--')
-    # plt.plot(domain, ei, 'b--', label='ei')
-    # plt.plot(domain, gamma, 'r', label='gamma')
-    plt.plot([selected_point, selected_point], [ax.axis()[2], ax.axis()[3]], 'r--',
-             label='EI selection')
-    plt.plot(dataset[:,:-1], dataset[:, -1:], 'rv', label='training', markersize=7.)
-    plt.xlabel('Input space')
-    plt.ylabel('Output space')
-    plt.title("NN-LR regression")
-    plt.legend()
-    figpath = 'figures/seq_regression_' + str(int(time.time())) + '.eps'
-    plt.savefig(figpath, format='eps', dpi=2000)
-    # plt.show()
+    if False:
+        ax = plt.gca()
+        true_func = [true_evaluate(domain[i, :], scale)[0, :].tolist() for i in range(domain.shape[0])]
+        true_func = np.array(true_func)
+        
+        # true_func = np.asarray([[i, noiseless_g(i)] for i in np.linspace(lim_domain[0], lim_domain[1], 100)], dtype=np.float32)
+        plt.plot(true_func[:, 0], true_func[:, 1], 'k', label='true', linewidth=3) # true plot
+        plt.plot(domain, pred, 'c', label='NN-LR regression', linewidth=3)
+        # plt.plot(domain, pred, 'c--', label='NN-LR regression', linewidth=7)
+        plt.plot(domain, nn_pred, 'r', label='NN regression', linewidth=3)
+        plt.plot(domain, hi_ci, 'g--', label='ci')
+        plt.plot(domain, lo_ci, 'g--')
+        # plt.plot(domain, ei, 'b--', label='ei')
+        # plt.plot(domain, gamma, 'r', label='gamma')
+        plt.plot([selected_point, selected_point], [ax.axis()[2], ax.axis()[3]], 'r--',
+                 label='EI selection')
+        plt.plot(dataset[:,:-1], dataset[:, -1:], 'rv', label='training', markersize=7.)
+        plt.xlabel('Input space')
+        plt.ylabel('Output space')
+        plt.title("NN-LR regression")
+        plt.legend()
+        figpath = 'figures/seq_regression_' + str(int(time.time())) + '.eps'
+        plt.savefig(figpath, format='eps', dpi=2000)
+        # plt.show()

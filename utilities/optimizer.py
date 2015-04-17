@@ -43,8 +43,6 @@ class Optimizer(object):
         linear_regressor = lm.LinearRegressor(lm_dataset)
         self.__pred, self.__hi_ci, self.__lo_ci = linear_regressor.predict(domain_features)
         self.__nn_pred = self.__feature_extractor.e.network(self.__domain)
-        # self.__hi_ci = 0*(self.__hi_ci - self.__pred) + self.__pred
-        # self.__lo_ci = 0*(self.__lo_ci - self.__pred) + self.__pred
 
     def select(self):
         """ Selects and returns the point in the domain X that has the max expected
@@ -58,7 +56,9 @@ class Optimizer(object):
         sig = (hi_ci - prediction)/2
         # gamma = (min(train_Y) - prediction)/sig # finding min
         # gamma = -(min(train_Y) - prediction)/sig # finding max
-        gamma = (prediction - np.max(train_Y)) / sig # -(min(train_Y) - prediction)/sig # finding max        ei = sig*(gamma*stats.norm.cdf(gamma) + stats.norm.pdf(gamma))
+        # -(min(train_Y) - prediction)/sig # finding max 
+        # ei = sig*(gamma*stats.norm.cdf(gamma) + stats.norm.pdf(gamma))
+        gamma = (prediction - np.max(train_Y)) / sig 
         self.__ei = ei
         index = np.argmax(ei)
         return self.__domain[index, :]
@@ -73,8 +73,7 @@ class Optimizer(object):
         hi_ci      = self.__hi_ci
 
         sig = abs((hi_ci - prediction)/2)
-        # gamma = (min(train_Y) - prediction)/sig # finding min
-        gamma = (prediction - np.max(train_Y)) / sig # -(min(train_Y) - prediction)/sig # finding max
+        gamma = (prediction - np.max(train_Y)) / sig
         ei = sig*(gamma*stats.norm.cdf(gamma) + stats.norm.pdf(gamma))
 
         if np.max(ei) <= 0:
@@ -106,7 +105,6 @@ class Optimizer(object):
         self.__gamma = gamma
         self.__ei = ei
 
-        # print np.atleast_2d(self.__domain[select_indices, :])
         return np.atleast_2d(self.__domain[select_indices, :])
 
     def check_point(self, selected_index, order):
@@ -155,7 +153,8 @@ class Optimizer(object):
         self.__pred, self.__hi_ci, self.__lo_ci = linear_regressor.predict(domain_features)
 
     def get_prediction(self):
-        return self.__domain, self.__pred, self.__hi_ci, self.__lo_ci, self.__nn_pred, self.__ei, self.__gamma
+        return (self.__domain, self.__pred, self.__hi_ci, 
+                self.__lo_ci, self.__nn_pred, self.__ei, self.__gamma)
 
     def get_dataset(self):
         return self.__dataset
@@ -165,19 +164,11 @@ if __name__ == "__main__":
     random.seed(42)
     # Settings
     lim_domain = np.array([[-1, -1],
-                           [ 1,  1]])                                     # x range for univariate data
+                           [ 1,  1]]) 
     nobs         = 50                                         # number of observed data
 
-    # g            = lambda x: np.exp(-x)*np.sin(10*x)*x-10*x**2 + np.random.randn()/10 # Define the hidden function
-    # noiseless_g  = lambda x: np.exp(-x)*np.sin(10*x)*x-10*x**2             
-    noiseless_g  = lambda x: 10*np.sin(x) - x
-    g            = lambda x: noiseless_g(x) + np.random.randn()/10 # Define the hidden function
-
     # Create dataset
-    
-    # dataset_X = np.asarray([[i] for i in np.linspace(0, lim_domain[1], nobs)], dtype=np.float32) # Uniform sampling
     dataset_X = np.random.uniform(-1, 1, size=(nobs, lim_domain.shape[1]))
-
     dataset = evaluate(dataset_X[0, :], lim_domain)
 
     for i in range(1, dataset_X.shape[0]):
@@ -194,9 +185,6 @@ if __name__ == "__main__":
 
     # Select a point
     for _ in range(50):
-        # print "start next point selection: " + str(selected_point)
-        # Update
-        # new_data = np.atleast_2d(np.concatenate((selected_point, g(selected_point))))
         if selection_index == selection_size:
             optimizer.update()
             selected_points = optimizer.select_multiple()
@@ -209,8 +197,6 @@ if __name__ == "__main__":
         optimizer.update_data(new_data)
 
 
-    # print "optimizer.py: final training"
-    # optimizer.train()
     dataset = optimizer.get_dataset()
     selected_point = optimizer.select_multiple()[0, :]
 
@@ -223,13 +209,7 @@ if __name__ == "__main__":
     # Plot results
     if False:
         ax = plt.gca()
-        true_func = [true_evaluate(domain[i, :], scale)[0, :].tolist() for i in range(domain.shape[0])]
-        true_func = np.array(true_func)
-        
-        # true_func = np.asarray([[i, noiseless_g(i)] for i in np.linspace(lim_domain[0], lim_domain[1], 100)], dtype=np.float32)
-        plt.plot(true_func[:, 0], true_func[:, 1], 'k', label='true', linewidth=3) # true plot
         plt.plot(domain, pred, 'c', label='NN-LR regression', linewidth=3)
-        # plt.plot(domain, pred, 'c--', label='NN-LR regression', linewidth=7)
         plt.plot(domain, nn_pred, 'r', label='NN regression', linewidth=3)
         plt.plot(domain, hi_ci, 'g--', label='ci')
         plt.plot(domain, lo_ci, 'g--')

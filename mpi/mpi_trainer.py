@@ -17,20 +17,20 @@ def trainer_process():
         tag = status.Get_tag()
         
         if tag == SEND_TRAINER:
-            if dataset == None:
-                dataset = new_data
-            else:
-                dataset = np.concatenate(dataset, new_data)
+            # if dataset == None:
+            #     dataset = new_data
+            # else:
+            #     dataset = np.concatenate(dataset, new_data)
 
-            nobs = dataset.shape[0]
-            print "TRAINER: Received from master"
-            print "TRAINER: Starting new feature extractor"
-            architecture = (1, 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
-            feature_extractor = nn.NeuralNet(architecture, dataset)
-            feature_extractor.train()
-            test = feature_extractor.extract_params()
-            print "TRAINER: Sending back to master"
-            comm.send(test, dest=0, tag=TRAINER_DONE)
+            # nobs = dataset.shape[0]
+            # print "TRAINER: Received from master"
+            # print "TRAINER: Starting new feature extractor"
+            # architecture = (1, 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
+            # feature_extractor = nn.NeuralNet(architecture, dataset)
+            # feature_extractor.train()
+            # test = feature_extractor.extract_params()
+            # print "TRAINER: Sending back to master"
+            comm.send(None, dest=0, tag=TRAINER_DONE)
             
         elif tag == EXIT_TRAINER:
             print "TRAINER: Commiting suicide"

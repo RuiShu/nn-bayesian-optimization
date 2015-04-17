@@ -24,13 +24,22 @@ import mpi_master as master
 import mpi_worker as worker
 import mpi_trainer as trainer
 
-print "THE RANK IS: %d, with total size: %d" % (rank, size)
-lim_domain = np.array([[-1., 1.],
-                       [ 1., 1.]])                                     # x range for univariate data
+# Check that we have the right number of processes
+if size < 3 and not rank == MASTER:
+    quit()
+elif size < 3:
+    print("MASTER: Need at least three processes running.")
+    quit()
 
-if rank == MASTER:                         # MASTER NODE
-    # Settings
-    init_size = 50
+# Print status of mpi 
+print "THE RANK IS: %d, with total size: %d" % (rank, size)
+
+# Setting
+lim_domain = np.array([[-1., 1.],
+                       [ 1., 1.]])
+init_size = 50
+
+if rank == MASTER:
     master.master_process(lim_domain, init_size)
 elif rank == TRAINER:
     trainer.trainer_process()

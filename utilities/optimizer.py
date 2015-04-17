@@ -6,6 +6,7 @@ import scipy.stats as stats
 import matplotlib.pyplot as plt
 import random
 from learning_objective.hidden_function import evaluate, true_evaluate
+import statsmodels.api as sm
 
 class Optimizer(object):
 
@@ -18,31 +19,78 @@ class Optimizer(object):
         self.__dataset = dataset
         nobs = dataset.shape[0]
         self.__architecture = (domain.shape[1], 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
-        self.__feature_extractor = nn.NeuralNet(self.__architecture, dataset)
         self.__domain = domain
-
-    def update_feature_extractor(self, feature_extractor):
-        self.__feature_extractor = feature_extractor
 
     def train(self):
         """ Using the stored dataset and architecture, trains the neural net to 
         perform feature extraction, and the linear regressor to perform prediction
         and confidence interval computation.
         """
+        neural_net = nn.NeuralNet(self.__architecture, dataset)
+        neural_net.train()
+        self.__W, self.__B = neural_net.extract_params()
+        self.__nn_pred = neural_net.e.network(self.__domain)
 
-        self.__feature_extractor.train()
+        # Extract features
+        train_X = self.__dataset[:, :-1]
+        train_Y = self.__dataset[:, -1:]
+        train_features = self.extract_features(train_X)
+        domain_features = self.extract_features(self.__domain)
+        lm_dataset = np.concatenate((train_features, train_Y), axis=1)
+
+        # Train and predict with linear_regressor
+        linear_regressor = lm.LinearRegressor(lm_dataset, intercept=False)
+        linear_regressor.train()
+        self.__pred, self.__hi_ci, self.__lo_ci = linear_regressor.predict(domain_features)
+
+    def retrain_NN(self):
+        neural_net = nn.NeuralNet(self.__architecture, dataset)
+        neural_net.train()
+        self.__W, self.__B = neural_net.extract_params()
+
+    def retrain_LR(self):
+        """ After the selected point (see select()) is queried, insert the new info
+        into dataset. Depending on the size of the dataset, the module decides whether
+        to re-train the neural net (for feature extraction). 
+        A new interpolation is then constructed.
+
+        Keyword arguments:
+        new_data -- a 1 by (m+1) array that forms the matrix [X, Y]
+        """
+
         train_X = self.__dataset[:, :-1]
         train_Y = self.__dataset[:, -1:]
 
         # Extract features
-        train_features = self.__feature_extractor.extract_features(train_X)
-        domain_features = self.__feature_extractor.extract_features(self.__domain)
+        train_features = self.extract_features(train_X)
+        domain_features = self.extract_features(self.__domain)
         lm_dataset = np.concatenate((train_features, train_Y), axis=1)
 
         # Train and predict with linear_regressor
         linear_regressor = lm.LinearRegressor(lm_dataset)
+        linear_regressor.train()
         self.__pred, self.__hi_ci, self.__lo_ci = linear_regressor.predict(domain_features)
-        self.__nn_pred = self.__feature_extractor.e.network(self.__domain)
+
+    def extract_features(self, test_X):
+        W = self.__W
+        B = self.__B
+        architecture = self.__architecture
+
+        # Feedforward into custom neural net
+        X = []
+        for i in range(test_X.shape[0]):
+            test_val = test_X[[i], :]
+            L = np.tanh(np.dot(test_val, W[0]) + B[0])
+            
+            for i in range(1, len(architecture)-2):
+                L = np.tanh(np.dot(L, W[i]) + B[i])
+                
+            X.extend(L.tolist())
+                
+        X = np.asarray(X)
+        X = sm.add_constant(X)
+
+        return X
 
     def select(self):
         """ Selects and returns the point in the domain X that has the max expected
@@ -118,39 +166,9 @@ class Optimizer(object):
 
     def update_data(self, new_data):
         self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
-        self.__feature_extractor.update_data(new_data)
 
-    def update(self, new_data=None):
-        """ After the selected point (see select()) is queried, insert the new info
-        into dataset. Depending on the size of the dataset, the module decides whether
-        to re-train the neural net (for feature extraction). 
-        A new interpolation is then constructed.
-
-        Keyword arguments:
-        new_data -- a 1 by (m+1) array that forms the matrix [X, Y]
-        """
-
-        if not (new_data == None):
-            self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
-
-        nobs = self.__dataset.shape[0]
-
-        if nobs < 50:
-            # Retrain NN if number of samples is less than 100 
-            self.__architecture = (1, 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
-            self.__feature_extractor.update(self.__architecture, new_data)
-
-        train_X = self.__dataset[:, :-1]
-        train_Y = self.__dataset[:, -1:]
-
-        # Extract features
-        train_features = self.__feature_extractor.extract_features(train_X)
-        domain_features = self.__feature_extractor.extract_features(self.__domain)
-        lm_dataset = np.concatenate((train_features, train_Y), axis=1)
-
-        # Train and predict with linear_regressor
-        linear_regressor = lm.LinearRegressor(lm_dataset)
-        self.__pred, self.__hi_ci, self.__lo_ci = linear_regressor.predict(domain_features)
+    def update_neural_net(self, neural_net):
+        pass
 
     def get_prediction(self):
         return (self.__domain, self.__pred, self.__hi_ci, 
@@ -186,7 +204,7 @@ if __name__ == "__main__":
     # Select a point
     for _ in range(50):
         if selection_index == selection_size:
-            optimizer.update()
+            optimizer.retrain_LR()
             selected_points = optimizer.select_multiple()
             selection_size = selected_points.shape[0]
             selection_index = 0

@@ -39,7 +39,6 @@ class NeuralNet(object):
         
         e.train(train_set, valid_set)
         self.e = e
-        self.extract_params()
 
     def extract_params(self):
         architecture = self.__architecture
@@ -56,39 +55,6 @@ class NeuralNet(object):
         
         return (W, B)
 
-    def extract_features(self, test_X):
-        W = self.__W
-        B = self.__B
-        architecture = self.__architecture
-
-        # Feedforward into custom neural net
-        X = []
-        
-        for i in range(test_X.shape[0]):
-            test_val = test_X[[i], :]
-            L = np.tanh(np.dot(test_val, W[0]) + B[0])
-            
-            for i in range(1, len(architecture)-2):
-                L = np.tanh(np.dot(L, W[i]) + B[i])
-                
-            X.extend(L.tolist())
-                
-        X = np.asarray(X)
-        X = sm.add_constant(X)
-
-        return X
-
-    def update_data(self, new_data):
-        self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
-
-    def update(self, architecture, new_data=None):
-        if not (new_data == None):
-            self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
-
-        self.__architecture = architecture
-        self.train()
-
-
 if __name__ == "__main__":
     # Settings
     lim_x        = [-1, 1]                                     # x range for univariate data
@@ -102,5 +68,3 @@ if __name__ == "__main__":
     feature_extractor = NeuralNet(architecture, dataset)
     feature_extractor.train()
     train_X = dataset[:, :-1]
-    train_features = feature_extractor.extract_features(train_X)
-    feature_extractor.update(dataset)

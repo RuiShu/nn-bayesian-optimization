@@ -88,7 +88,6 @@ def master_process(lim_domain, init_size):
 
     # NN-LR based query system
     optimizer = op.Optimizer(dataset, domain)
-    optimizer.train()
 
     # Select a series of points to query
     selected_points = optimizer.select_multiple() # (#points, m) array

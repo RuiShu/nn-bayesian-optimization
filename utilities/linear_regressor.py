@@ -1,3 +1,10 @@
+"""
+@Author: Rui Shu
+@Date: 4/11/15
+
+Performs linear regression and returns the confidence interval. 
+"""
+
 import numpy as np
 import statsmodels.api as sm
 import sklearn.linear_model as sklm

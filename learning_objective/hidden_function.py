@@ -23,7 +23,7 @@ def evaluate(query, lim_domain):
     mean    = (lim_domain[1, :] + lim_domain[0, :])/2.
     query   = np.atleast_2d(query)      # Convert to (1, m) array
     X       = query*var + mean          # Scale query to true input space
-    Y       = np.atleast_2d(g(X)[0, 0]) # Compute output
+    Y       = np.atleast_2d(g(X[0, 0])) # Compute output
     dataset = np.concatenate((query, Y), axis=1)  
 
     # time.sleep(0.5)
@@ -37,12 +37,11 @@ def true_evaluate(query, lim_domain):
     lim_domain -- a (2, m) array. Defines the search space boundaries of the 
                   true input space
     """
-    
     var     = (lim_domain[1, :] - lim_domain[0, :])/2.
     mean    = (lim_domain[1, :] + lim_domain[0, :])/2.
     query   = np.atleast_2d(query)                # Convert to (1, m) array
     X       = query*var + mean                    # Scale query to true input space
-    Y       = np.atleast_2d(noiseless_g(X)[0, 0]) # Compute output
+    Y       = np.atleast_2d(noiseless_g(X[0, 0])) # Compute output
     dataset = np.concatenate((query, Y), axis=1)  
 
     # time.sleep(0.5)

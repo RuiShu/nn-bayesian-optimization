@@ -36,7 +36,15 @@ def master_process(lim_domain, init_size):
 
     # Acquire an initial data set
     init_query = np.random.uniform(-1, 1, size=(init_size, lim_domain.shape[1]))
-    domain = init_query
+
+    # WARNING. SET THE THING YOURSELF FOR NOW.
+    r = np.linspace(-1, 1, 50)
+    X = np.meshgrid(r, r)
+    xx = np.atleast_2d([x.ravel() for x in X]).T
+    domain = np.atleast_2d(xx[0])
+    for i in range(1, xx.shape[0]):
+        domain = np.concatenate((domain, np.atleast_2d(xx[i])), axis=0)
+
     dataset = None
 
     # Initial query

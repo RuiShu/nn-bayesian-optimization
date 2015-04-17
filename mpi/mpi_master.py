@@ -100,7 +100,7 @@ def master_process(lim_domain, init_size):
     trainer_index = 0   # Keeps track of data that trainer doesn't have
     selection_index = 0         # Keeps track of unqueried selected_points 
     queries_done = 0            # Keeps track of total queries done
-    queries_total = 50
+    queries_total = 100
 
     # while False:
     while closed_workers < num_workers:
@@ -142,7 +142,7 @@ def master_process(lim_domain, init_size):
             optimizer.update_data(data)                       # add data to optimizer
             queries_done += 1                                 
 
-            string1 = "MASTER: Number of total tasks: %3d. " % init_done
+            string1 = "MASTER: Number of total tasks: %3d. " % queries_done
             string2 = "New data from WORKER %2d is: " % source
             print string1 + string2 + str(data)
 
@@ -156,6 +156,12 @@ def master_process(lim_domain, init_size):
 
     t2 = time.time()
     print "MASTER: Total update time is: %3.3f" % (t2-t1)
+    print dataset[np.argmax(dataset[:, -1]), :]
+    domain, pred, hi_ci, lo_ci, nn_pred, ei, gamma = optimizer.get_prediction()
+    index = np.argmax(pred[:, 0])
+    print "MASTER: Prediction"
+    print np.concatenate((np.atleast_2d(domain[index, :]), np.atleast_2d(pred[index, 0])), axis=1)
+
 
     # # Plot results
     # if plot_it:

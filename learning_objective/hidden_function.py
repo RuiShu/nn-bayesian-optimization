@@ -7,12 +7,12 @@ Provides a proxy hidden function for running of optimizer and mpi_optimizer
 
 import numpy as np
 import time
-# from gaussian_mix import gaussian_mix as gm
+from gaussian_mix import gaussian_mix as gm
 
 noiseless_g  = lambda x: 10*np.sin(x) - x
 g            = lambda x: noiseless_g(x) + np.random.randn()/10 # Define the hidden function
 
-def evaluate_alt(query, lim_domain):
+def evaluate(query, lim_domain):
     """ Queries a single point with noise.
 
     Keyword arguments:
@@ -24,12 +24,12 @@ def evaluate_alt(query, lim_domain):
     mean    = (lim_domain[1, :] + lim_domain[0, :])/2.
     query   = np.atleast_2d(query)      # Convert to (1, m) array
     X       = query*var + mean          # Scale query to true input space
-    dataset = gm(X)
+    dataset = np.concatenate((query, gm(X)), axis=1)
     
     # time.sleep(0.5)
     return dataset
     
-def evaluate(query, lim_domain):
+def evaluate_alt(query, lim_domain):
     """ Queries a single point with noise.
 
     Keyword arguments:

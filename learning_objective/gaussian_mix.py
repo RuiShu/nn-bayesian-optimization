@@ -16,7 +16,7 @@ def gaussian_mix(query):
 
     # Take the average.
     gaussian_function = value / len(gaussians)
-    return vec(np.append(query, gaussian_function)) # vec(np.array([query.ravel(), gaussian_function]).ravel())
+    return vec(gaussian_function) # vec(np.array([query.ravel(), gaussian_function]).ravel())
 
 
 if __name__ == "__main__":

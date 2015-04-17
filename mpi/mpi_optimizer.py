@@ -35,8 +35,8 @@ elif size < 3:
 print "THE RANK IS: %d, with total size: %d" % (rank, size)
 
 # Setting
-lim_domain = np.array([[-1., 1.],
-                       [ 1., 1.]])
+lim_domain = np.array([[-1., -1.],
+                       [ 1.,  1.]])
 init_size = 50
 
 if rank == MASTER:

@@ -22,35 +22,33 @@ from mpi_definitions import *
 import time 
 
 print "THE RANK IS: %d, with total size: %d" % (rank, size)
-plot_it = True
+plot_it = False
 def contains_row(x, X):
     """ Checks if the row x is contained in matrix X
     """
-
     for i in range(X.shape[0]):
-        if X[i,:] == x:
+        if all(X[i,:] == x):
             return True
 
+    quit()
     return False
 
-def master_process(lim_x, init_size):
+def master_process(lim_domain, init_size):
     from learning_objective.hidden_function import evaluate, true_evaluate
     import mpi_master
     import random
     import matplotlib.pyplot as plt
     import utilities.optimizer as op
     t1 = time.time()
-    scale = np.max(np.abs(lim_x))
     num_workers = size - 1
     closed_workers = 0
 
     print "MASTER: starting with %d workers" % num_workers
 
-    # init_query = np.asarray([[i] for i in np.linspace(0, lim_x[1], init_size)],
+    # init_query = np.asarray([[i] for i in np.linspace(0, lim_domain[1], init_size)],
     #                         dtype=np.float32) # Uniform soampling
-    init_query = np.asarray([[np.random.uniform(0, 1)] for _ in range(init_size)],
-                            dtype=np.float32) # Random uniform sampling
-    domain = np.asarray([[i] for i in np.linspace(-1, 1, 1000)])
+    init_query = np.random.uniform(-1, 1, size=(init_size, lim_domain.shape[1]))
+    domain = init_query
 
     # Acquire an initial data set
     tasks_assigned = 0
@@ -81,6 +79,9 @@ def master_process(lim_x, init_size):
             if contains_row(data[0, :-1], init_query):
                 tasks_done += 1
 
+            string = "MASTER: Number of total tasks: %3d. New data from WORKER %2d is: " % (tasks_done, source)
+            print string + str(data)
+
     print "Complete initial dataset acquired"
     print dataset
 
@@ -93,10 +94,10 @@ def master_process(lim_x, init_size):
 
     selection_index = 0
     trainer_dataset_index = 0
-    trainer_is_ready = True
+    trainer_is_ready = False
 
     tasks_done = 0
-    tasks_total = 500
+    tasks_total = 50
 
     # while False:
     while closed_workers < num_workers:
@@ -156,7 +157,7 @@ def master_process(lim_x, init_size):
     # Plot results
     if plot_it:
         plt.gcf().set_size_inches(8, 8)
-        true_func = [true_evaluate(domain[i, :], scale)[0, :].tolist() for i in range(domain.shape[0])]
+        true_func = [true_evaluate(domain[i, :], lim_domain)[0, :].tolist() for i in range(domain.shape[0])]
         true_func = np.array(true_func)
         # optimizer.train()
         selected_point = optimizer.select_multiple()[0, :]
@@ -230,9 +231,9 @@ def trainer_process():
     comm.send(None, dest=0, tag=EXIT_TRAINER) # Suicide complete
 
 
-def worker_process(lim_x, rank):
+def worker_process(lim_domain, rank):
     from learning_objective.hidden_function import evaluate
-    scale = np.max(np.abs(lim_x))
+
     while True:
         comm.send("WORKER is ready", dest=0, tag=WORKER_READY)    # tell Master node that I need a new query
         query  = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
@@ -241,7 +242,7 @@ def worker_process(lim_x, rank):
         if tag == SEND_WORKER:
             # string = "WORKER %3d: The query is: " % rank
             # print string + str(query)  
-            result = evaluate(query, scale)
+            result = evaluate(query, lim_domain)
             comm.send(result, dest=0, tag=WORKER_DONE)
 
         elif tag == EXIT_WORKER:
@@ -251,14 +252,15 @@ def worker_process(lim_x, rank):
 
     comm.send(None, dest=0, tag=EXIT_WORKER) # Suicide complete
     
-lim_x        = [-6, 6]                                     # x range for univariate data
+lim_domain = np.array([[-1., 1.],
+                       [ 1., 1.]])                                     # x range for univariate data
 
 if rank == MASTER:                         # MASTER NODE
     # Settings
     init_size = 50
-    master_process(lim_x, init_size)
+    master_process(lim_domain, init_size)
 
 elif rank == TRAINER:
     trainer_process()
 else:
-    worker_process(lim_x, rank)
+    worker_process(lim_domain, rank)

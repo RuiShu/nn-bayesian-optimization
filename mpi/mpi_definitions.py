@@ -1,6 +1,5 @@
 from mpi4py import MPI
 import numpy as np
-from test import *
 
 MASTER        = 0
 TRAINER       = 1

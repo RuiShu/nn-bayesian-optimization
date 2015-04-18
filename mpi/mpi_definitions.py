@@ -1,6 +1,7 @@
 from mpi4py import MPI
 import numpy as np
 from test import *
+import theano
 
 MASTER        = 0
 TRAINER       = 1
@@ -18,4 +19,4 @@ comm = MPI.COMM_WORLD   # get MPI communicator object
 size = comm.size        # total number of processes
 rank = comm.rank        # rank of this process
 status = MPI.Status()   # get MPI status object
-
+theano.gof.compilelock.set_lock_status(False)

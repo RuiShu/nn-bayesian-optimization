@@ -26,7 +26,7 @@ class Optimizer(object):
         perform feature extraction, and the linear regressor to perform prediction
         and confidence interval computation.
         """
-        neural_net = nn.NeuralNet(self.__architecture, dataset)
+        neural_net = nn.NeuralNet(self.__architecture, self.__dataset)
         neural_net.train()
         self.__W, self.__B = neural_net.extract_params()
         self.__nn_pred = neural_net.e.network(self.__domain)
@@ -167,8 +167,10 @@ class Optimizer(object):
     def update_data(self, new_data):
         self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
 
-    def update_neural_net(self, neural_net):
-        pass
+    def update_params(self, W, B, architecture):
+        self.__W = W
+        self.__B = B
+        self.__architecture = architecture
 
     def get_prediction(self):
         return (self.__domain, self.__pred, self.__hi_ci, 

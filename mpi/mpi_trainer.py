@@ -5,6 +5,7 @@
 Trainer -- in charge of handling the neural network training. 
 """
 from mpi_definitions import *
+from theano_definitions import *
 
 def trainer_process():
     import utilities.neural_net as nn
@@ -15,22 +16,24 @@ def trainer_process():
     while True:
         new_data = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
         tag = status.Get_tag()
-        
-        if tag == SEND_TRAINER:
-            # if dataset == None:
-            #     dataset = new_data
-            # else:
-            #     dataset = np.concatenate(dataset, new_data)
 
-            # nobs = dataset.shape[0]
-            # print "TRAINER: Received from master"
-            # print "TRAINER: Starting new feature extractor"
-            # architecture = (1, 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
-            # feature_extractor = nn.NeuralNet(architecture, dataset)
-            # feature_extractor.train()
-            # test = feature_extractor.extract_params()
-            # print "TRAINER: Sending back to master"
-            comm.send(None, dest=0, tag=TRAINER_DONE)
+        if tag == SEND_TRAINER:
+            print "TRAINER: Received from master, starting new neural net"
+
+            if dataset == None:
+                dataset = new_data
+
+            else:
+                dataset = np.concatenate((dataset, new_data), axis=0)
+
+            nobs = dataset.shape[0]
+            architecture = (dataset.shape[1] - 1, 50, 50, nobs - 2 if nobs < 50 else 50, 1 )
+            neural_net = nn.NeuralNet(architecture, dataset)
+            neural_net.train()
+            W, B = neural_net.extract_params()
+
+            print "TRAINER: Sending back to master"
+            comm.send((W, B, architecture), dest=0, tag=TRAINER_DONE)
             
         elif tag == EXIT_TRAINER:
             print "TRAINER: Commiting suicide"

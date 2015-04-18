@@ -88,6 +88,7 @@ def master_process(lim_domain, init_size):
 
     # NN-LR based query system
     optimizer = op.Optimizer(dataset, domain)
+    optimizer.train()
 
     # Select a series of points to query
     selected_points = optimizer.select_multiple() # (#points, m) array
@@ -99,20 +100,20 @@ def master_process(lim_domain, init_size):
     trainer_index = 0   # Keeps track of data that trainer doesn't have
     selection_index = 0         # Keeps track of unqueried selected_points 
     queries_done = 0            # Keeps track of total queries done
-    queries_total = 100
+    queries_total = 500
 
     # while False:
     while closed_workers < num_workers:
         if selection_index == selection_size:
             # Update optimizer's dataset and retrain LR
-            optimizer.update()                            
+            optimizer.retrain_LR()                            
             selected_points = optimizer.select_multiple() # Select new points
             selection_size = selected_points.shape[0]     # Get number of selected points
             selection_index = 0                           # Restart index
             
-        if trainer_is_ready and (dataset.shape[0] - trainer_index - 1) >= 100:
+        if queries_done < queries_total and trainer_is_ready and (dataset.shape[0] - trainer_index - 1) >= 100:
             # Trainer ready and enough new data for trainer to train a new NN.
-            print "MASTER: Trainer has been activated"
+            print "MASTER: Trainer has been summoned"
             comm.send(dataset[trainer_index: -1, :], dest=TRAINER, tag=SEND_TRAINER)
             trainer_index = dataset.shape[0] - 1
             trainer_is_ready = not trainer_is_ready # Trainer is not longer available.
@@ -146,8 +147,9 @@ def master_process(lim_domain, init_size):
             print string1 + string2 + str(data)
 
         elif tag == TRAINER_DONE:
-            print "MASTER: Pretending to update feature extractor"
-            # optimizer.update_feature_extractor(data)
+            print "MASTER: Updating neural network"
+            W, B, architecture = data
+            optimizer.update_params(W, B, architecture)
             trainer_is_ready = not trainer_is_ready 
 
         elif tag == EXIT_WORKER or tag == EXIT_TRAINER:

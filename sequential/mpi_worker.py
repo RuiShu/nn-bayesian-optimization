@@ -7,10 +7,8 @@ Worker -- compute the costly function. Returns function evaluation.
 
 from mpi_definitions import *
 
-def worker_process(rank):
-    from learning_objective.hidden_function import evaluate, get_settings
-
-    lim_domain = get_settings(lim_domain_only=True)
+def worker_process(lim_domain, rank):
+    from learning_objective.hidden_function import evaluate
 
     while True:
         comm.send("WORKER is ready", dest=0, tag=WORKER_READY)    # tell Master node that I need a new query

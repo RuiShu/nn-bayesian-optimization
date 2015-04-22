@@ -34,9 +34,14 @@ elif size < 3:
 # Print status of mpi 
 print "THE RANK IS: %d, with total size: %d" % (rank, size)
 
+# Setting
+lim_domain = np.array([[-1., -1.],
+                       [ 1.,  1.]])
+init_size = 50
+
 if rank == MASTER:
-    master.master_process()
+    master.master_process(lim_domain, init_size)
 elif rank == TRAINER:
     trainer.trainer_process()
 else:
-    worker.worker_process(rank)
+    worker.worker_process(lim_domain, rank)

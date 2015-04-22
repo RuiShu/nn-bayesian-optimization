@@ -21,8 +21,9 @@ def contains_row(x, X):
 
     return False
 
-def master_process(lim_domain, init_size):
-    from learning_objective.hidden_function import evaluate, true_evaluate
+def master_process():
+    f = open("data/mpi_time_data.csv", "a")
+    from learning_objective.hidden_function import evaluate, true_evaluate, get_settings
     import random
     import matplotlib.pyplot as plt
     import utilities.optimizer as op
@@ -34,20 +35,21 @@ def master_process(lim_domain, init_size):
     num_workers = size - 1      # Get number of workers
     closed_workers = 0          # Get number of workers EXIT'ed
 
+    # Get settings relevant to the hidden function being used
+    lim_domain, init_size, additional_query_size, init_query, domain = get_settings()
+
+    # init_query = np.random.uniform(-1, 1, size=(init_size, lim_domain.shape[1]))
+
+    # # WARNING. SET THE THING YOURSELF FOR NOW.
+    # r = np.linspace(-1, 1, 50)
+    # X = np.meshgrid(r, r)
+    # xx = np.atleast_2d([x.ravel() for x in X]).T
+    # domain = np.atleast_2d(xx[0])
+    # for i in range(1, xx.shape[0]):
+    #     domain = np.concatenate((domain, np.atleast_2d(xx[i])), axis=0)
+
     # Acquire an initial data set
-    init_query = np.random.uniform(-1, 1, size=(init_size, lim_domain.shape[1]))
-
-    # WARNING. SET THE THING YOURSELF FOR NOW.
-    r = np.linspace(-1, 1, 50)
-    X = np.meshgrid(r, r)
-    xx = np.atleast_2d([x.ravel() for x in X]).T
-    domain = np.atleast_2d(xx[0])
-    for i in range(1, xx.shape[0]):
-        domain = np.concatenate((domain, np.atleast_2d(xx[i])), axis=0)
-
     dataset = None
-
-    # Initial query
     init_assigned = 0           # init query counters
     init_done = 0
 
@@ -100,7 +102,9 @@ def master_process(lim_domain, init_size):
     trainer_index = 0   # Keeps track of data that trainer doesn't have
     selection_index = 0         # Keeps track of unqueried selected_points 
     queries_done = 0            # Keeps track of total queries done
-    queries_total = 500
+    queries_total = additional_query_size
+
+    t0 = time.time()
 
     # while False:
     while closed_workers < num_workers:
@@ -146,6 +150,10 @@ def master_process(lim_domain, init_size):
             string2 = "New data from WORKER %2d is: " % source
             print string1 + string2 + str(data)
 
+            if queries_done <= queries_total:
+                info = "%.3f," % (time.time()-t0)
+                f.write(info)
+
         elif tag == TRAINER_DONE:
             print "MASTER: Updating neural network"
             W, B, architecture = data
@@ -155,13 +163,17 @@ def master_process(lim_domain, init_size):
         elif tag == EXIT_WORKER or tag == EXIT_TRAINER:
             closed_workers += 1 
 
+    f.write("NA\n")
+    f.close()
     t2 = time.time()
     print "MASTER: Total update time is: %3.3f" % (t2-t1)
+    print "Best evaluated point is:"
     print dataset[np.argmax(dataset[:, -1]), :]
+    print "MASTER: Predicted best point is:"
+    optimizer.retrain_LR()
     domain, pred, hi_ci, lo_ci, nn_pred, ei, gamma = optimizer.get_prediction()
     index = np.argmax(pred[:, 0])
-    print "MASTER: Prediction"
-    print np.concatenate((np.atleast_2d(domain[index, :]), np.atleast_2d(pred[index, 0])), axis=1)
+    print np.concatenate((np.atleast_2d(domain[index, :]), np.atleast_2d(pred[index, 0])), axis=1)[0, :]
 
 
     # # Plot results

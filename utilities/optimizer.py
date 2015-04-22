@@ -44,7 +44,7 @@ class Optimizer(object):
         self.__pred, self.__hi_ci, self.__lo_ci = linear_regressor.predict(domain_features)
 
     def retrain_NN(self):
-        neural_net = nn.NeuralNet(self.__architecture, dataset)
+        neural_net = nn.NeuralNet(self.__architecture, self.__dataset)
         neural_net.train()
         self.__W, self.__B = neural_net.extract_params()
 
@@ -165,8 +165,13 @@ class Optimizer(object):
         return (stats.norm.cdf(-z_score)*2) < 0.5
 
     def update_data(self, new_data):
+        nobs = self.__dataset.shape[0]
+        if nobs < 50:
+            nobs += new_data.shape[0]
+            self.__architecture = (self.__domain.shape[1], 50, 50, nobs - 2 if nobs < 50 else 50, 1)
+        
         self.__dataset = np.concatenate((self.__dataset, new_data), axis=0)
-
+    
     def update_params(self, W, B, architecture):
         self.__W = W
         self.__B = B

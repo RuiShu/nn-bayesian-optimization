@@ -12,6 +12,30 @@ from gaussian_mix import gaussian_mix as gm
 noiseless_g  = lambda x: 10*np.sin(x) - x
 g            = lambda x: noiseless_g(x) + np.random.randn()/10 # Define the hidden function
 
+def get_settings(lim_domain_only=False):
+    # Settings
+    lim_domain = np.array([[-1., -1.],
+                           [ 1.,  1.]])
+
+    if lim_domain_only:
+        return lim_domain
+
+    init_size = 50
+    additional_query_size = 250
+
+    # Get initial set of locations to query
+    init_query = np.random.uniform(-1, 1, size=(init_size, lim_domain.shape[1]))
+
+    # WARNING. SET THE THING YOURSELF FOR NOW.
+    r = np.linspace(-1, 1, 50)
+    X = np.meshgrid(r, r)
+    xx = np.atleast_2d([x.ravel() for x in X]).T
+    domain = np.atleast_2d(xx[0])
+    for i in range(1, xx.shape[0]):
+        domain = np.concatenate((domain, np.atleast_2d(xx[i])), axis=0)
+
+    return lim_domain, init_size, additional_query_size, init_query, domain
+
 def evaluate(query, lim_domain):
     """ Queries a single point with noise.
 
@@ -26,7 +50,7 @@ def evaluate(query, lim_domain):
     X       = query*var + mean          # Scale query to true input space
     dataset = np.concatenate((query, gm(X)), axis=1)
     
-    # time.sleep(0.5)
+    time.sleep(2)
     return dataset
     
 def evaluate_alt(query, lim_domain):

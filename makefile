@@ -1,7 +1,9 @@
 all:
 	python -m utilities.optimizer
+seq:
+	python -m sequential.seq_optimizer
 par:
-	mpiexec -np 4 python -m mpi.mpi_optimizer
+	mpiexec -np 8 python -m mpi.mpi_optimizer
 clean:
 	find -name "*pyc" -delete
 push:
@@ -10,3 +12,11 @@ push:
 	git merge development
 	git push origin master
 	git checkout development
+seqloop:
+	for number in 1 2 3 4 5 6 7 8 9 10 ; do \
+		python -m sequential.seq_optimizer ; \
+	done
+parloop:
+	for number in 1 2 3 4 5 6 7 8 9 10 ; do \
+		mpiexec -np 8 python -m mpi.mpi_optimizer ; \
+	done

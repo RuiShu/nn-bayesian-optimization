@@ -77,3 +77,12 @@ PUSHED
    Change hidden function 
 ** mpi_master.py
    Proper griding
+
+* Things changed
+** Added sequential folder
+   Only needed function is seq_optimizer.py
+** Add a general settings folder
+   contain settings.py
+   settings.py contains information pertinent to both mpi and seq optimizer.
+   it: defines lim_domain, init_size, additional_query_size, init_query, domain 
+** 

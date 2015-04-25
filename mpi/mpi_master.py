@@ -36,7 +36,8 @@ def master_process():
     closed_workers = 0          # Get number of workers EXIT'ed
 
     # Get settings relevant to the hidden function being used
-    lim_domain, init_size, additional_query_size, init_query, domain = get_settings()
+    lim_domain, init_size, additional_query_size, init_query, domain, selection_size = get_settings()
+    
 
     # init_query = np.random.uniform(-1, 1, size=(init_size, lim_domain.shape[1]))
 
@@ -93,8 +94,7 @@ def master_process():
     optimizer.train()
 
     # Select a series of points to query
-    selected_points = optimizer.select_multiple() # (#points, m) array
-    selection_size = selected_points.shape[0]
+    selected_points = optimizer.select_multiple(selection_size) # (#points, m) array
     print "Selection size is: " + str(selection_size)
 
     # Set counters
@@ -111,7 +111,7 @@ def master_process():
         if selection_index == selection_size:
             # Update optimizer's dataset and retrain LR
             optimizer.retrain_LR()                            
-            selected_points = optimizer.select_multiple() # Select new points
+            selected_points = optimizer.select_multiple(selection_size) # Select new points
             selection_size = selected_points.shape[0]     # Get number of selected points
             selection_index = 0                           # Restart index
             

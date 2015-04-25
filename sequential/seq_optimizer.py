@@ -11,13 +11,14 @@ import utilities.optimizer as op
 import numpy as np
 
 # Open file to write times for comparison
-f = open("data/sequential_time_data.csv", "a")
+# f = open("data/crap_sequential_time_data.csv", "a")
+f = open("data/crap_nn_350obs_time_data.csv", "a")
 
 # Freeze plotting
 plot_it = False
 
 # Get settings relevant to the hidden function being used
-lim_domain, init_size, additional_query_size, init_query, domain = get_settings()
+lim_domain, init_size, additional_query_size, init_query, domain, selection_size = get_settings()
 
 # Construct the dataset
 dataset = evaluate(init_query[0,:], lim_domain)
@@ -33,8 +34,7 @@ optimizer = op.Optimizer(dataset, domain)
 optimizer.train()
 
 # Select a series of points to query
-selected_points = optimizer.select_multiple() # (#points, m) array
-selection_size = selected_points.shape[0]
+selected_points = optimizer.select_multiple(selection_size) # (#points, m) array
 selection_index = 0
 print "Selection size is: " + str(selection_size)
 
@@ -44,9 +44,12 @@ for i in range(additional_query_size):
     if selection_index == selection_size:
         # Update optimizer's dataset and retrain LR
         optimizer.retrain_LR()                            
-        selected_points = optimizer.select_multiple() # Select new points
+        selected_points = optimizer.select_multiple(selection_size) # Select new points
         selection_size = selected_points.shape[0]     # Get number of selected points
         selection_index = 0                           # Restart index
+        info = "%.3f," % (time.time()-t0)
+        f.write(info)
+        t0 = time.time()
 
     if (optimizer.get_dataset().shape[0] % 100) == 0:
         # Retrain the neural network
@@ -56,13 +59,13 @@ for i in range(additional_query_size):
     optimizer.update_data(new_data)
     selection_index += 1
 
-    string1 = "Tasks done: %3d. " % i 
+    string1 = "Tasks done: %3d. " % (i+1)
     string2 = "New data added to dataset: " + str(new_data)
     print string1 + string2
-    info = "%.3f," % (time.time()-t0)
-    f.write(info)
+    # info = "%.3f," % (time.time()-t0)
+    # f.write(info)
 
-f.write("NA\n")
+# f.write("NA\n")
 f.close()
 print "Sequential optimization task complete."
 print "Best evaluated point is:"

@@ -111,7 +111,7 @@ class Optimizer(object):
         index = np.argmax(ei)
         return self.__domain[index, :]
 
-    def select_multiple(self):
+    def select_multiple(self, cap=5):
         """ Identify multiple points. 
         """
         
@@ -126,7 +126,7 @@ class Optimizer(object):
 
         if np.max(ei) <= 0:
             sig_order = np.argsort(-sig, axis=0)
-            select_indices = sig_order[:5, 0].tolist()
+            select_indices = sig_order[:cap, 0].tolist()
             print "optimizer.py: Pure exploration"
         else:
             ei_order = np.argsort(-1*ei, axis=0)
@@ -138,13 +138,13 @@ class Optimizer(object):
                     keep = keep*self.check_point(selected_index, candidate)
                 if keep and ei[candidate, 0] > 0:
                     select_indices.append(candidate)
-                if len(select_indices) == 5: # Number of points to select
+                if len(select_indices) == cap: # Number of points to select
                     break 
 
-            if len(select_indices) < 5:
+            if len(select_indices) < cap:
                 print "optimizer.py: Exploration appended"
                 sig_order = np.argsort(-sig, axis=0)
-                add_indices = sig_order[:(5-len(select_indices)), 0].tolist()
+                add_indices = sig_order[:(cap-len(select_indices)), 0].tolist()
                 select_indices.extend(add_indices)
             else:
                 print "optimizer.py: All expected"

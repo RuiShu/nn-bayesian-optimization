@@ -33,3 +33,8 @@ loop:
 	for number in 1 2 3 4 5 6 7 8 9 10 ; do \
 		python -m sequential.seq_gaussian_process ; \
 	done
+gplooper:
+	for arg in `seq 3 10` ; do \
+		echo gp_gp_$$arg.txt ; \
+		python -m sequential.seq_gaussian_process > ./data/gp_gp_$$arg.txt ; \
+	done

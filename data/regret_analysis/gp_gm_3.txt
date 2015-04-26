@@ -1,0 +1,857 @@
+Complete initial dataset acquired
+[[  7.76282545e-01   3.35437852e-01   6.00233149e-01]
+ [  4.12284027e-01  -8.45824022e-01  -3.85956291e-05]
+ [ -6.99839665e-01   8.33270723e-01  -4.61459316e-04]
+ [  6.39828179e-01  -6.85677429e-02   4.07150393e-01]
+ [ -1.54120174e-01   8.40037338e-02   4.23874675e-04]
+ [  9.92990209e-01  -5.87218572e-01   9.79220424e-03]
+ [ -9.44341447e-01   3.10427937e-01   4.40856430e-05]
+ [ -2.43566683e-01   9.17411385e-01   6.15209546e-02]
+ [  7.16137269e-01  -2.57469031e-01   2.10875620e-01]
+ [  7.59845527e-01   9.72552397e-03   8.06013828e-01]
+ [ -6.67210628e-01   3.79091403e-01   1.10186727e-03]
+ [ -9.53094950e-01  -1.74137614e-01  -3.19976340e-05]
+ [  5.57666774e-01  -1.69975539e-01   1.57646628e-01]
+ [  9.84352409e-01   3.29502216e-01   6.44636023e-01]
+ [  7.69342840e-01  -9.41888908e-01   1.93570541e-03]
+ [  6.43826966e-02   9.55927531e-01   5.28810245e-01]
+ [ -5.10385568e-01   7.73800406e-01   1.53506975e-03]
+ [ -5.49652737e-01   8.76043462e-01   1.24750949e-03]
+ [ -3.14037460e-02  -9.11868896e-01  -6.72891959e-04]
+ [ -5.94496945e-01   3.59490330e-01  -1.26069782e-03]
+ [ -6.30998999e-01   1.88095186e-01   7.45312718e-04]
+ [ -2.92637656e-01   9.16413816e-01   3.06841816e-02]
+ [  7.20938687e-01  -2.78318341e-01   1.84203257e-01]
+ [  6.62363325e-02  -8.79670733e-01   2.20402469e-04]
+ [  2.11520654e-02  -6.73726589e-01  -1.70302655e-03]
+ [ -2.07648155e-01  -6.91949797e-01  -2.15846880e-03]
+ [ -3.91877864e-01  -5.26096906e-02  -6.40228886e-04]
+ [  8.53864850e-01  -7.45122767e-01  -1.04881866e-03]
+ [  5.87342984e-01   3.23849248e-01   2.97026071e-01]
+ [ -1.78201491e-01  -8.48449322e-01  -1.04347584e-03]
+ [  1.99937406e-01   4.23641557e-02   8.17377132e-03]
+ [  6.00876332e-01  -5.68255013e-01   5.54937709e-03]
+ [  7.02271094e-02   9.76739614e-01   4.48498115e-01]
+ [ -8.95550827e-01   5.06804751e-01   1.52960578e-03]
+ [  7.48246460e-01   8.50389271e-01   6.52261324e-01]
+ [ -3.42144941e-02   5.93784076e-02   2.89369141e-03]
+ [  4.09599478e-01   7.17411467e-01   6.98437819e-01]
+ [  9.63734589e-01   4.77117776e-02   9.95750001e-01]
+ [ -4.24186407e-01   4.12646557e-01  -2.88201499e-04]
+ [  2.62210133e-02  -7.80340475e-02   1.16816125e-03]
+ [  9.95014292e-01  -9.53792181e-01   4.29714662e-04]
+ [  6.56877007e-01  -8.34063960e-02   4.21973593e-01]
+ [ -6.63007091e-01  -1.51958160e-01   1.56367943e-03]
+ [  8.77570397e-01  -6.48906294e-01   3.74061826e-03]
+ [ -2.22290753e-01   4.52628201e-01   6.37523384e-02]
+ [  5.36734682e-01  -1.65073523e-01   1.40804173e-01]
+ [  4.34920877e-01   1.37824837e-01   1.28470138e-01]
+ [  7.44976441e-01   1.87316620e-01   7.90877858e-01]
+ [ -1.20755691e-02  -7.39799683e-01  -2.16383979e-04]
+ [  8.87765749e-01  -5.88632350e-02   8.23680518e-01]]
+optimizer.py: All expected
+Tasks done:   1. New data added to dataset: [[ 0.91836735  0.10204082  1.06609499]]
+optimizer.py: All expected
+Tasks done:   2. New data added to dataset: [[ 0.91836735  0.10204082  1.06630804]]
+optimizer.py: All expected
+Tasks done:   3. New data added to dataset: [[ 0.91836735  0.10204082  1.06393232]]
+optimizer.py: All expected
+Tasks done:   4. New data added to dataset: [[ 0.91836735  0.10204082  1.06435733]]
+optimizer.py: All expected
+Tasks done:   5. New data added to dataset: [[ 0.18367347  0.75510204  1.67009802]]
+optimizer.py: All expected
+Tasks done:   6. New data added to dataset: [[ 0.14285714  0.67346939  1.7571012 ]]
+optimizer.py: All expected
+Tasks done:   7. New data added to dataset: [[ 0.18367347  0.67346939  1.73440754]]
+optimizer.py: All expected
+Tasks done:   8. New data added to dataset: [[ 0.14285714  0.67346939  1.75768031]]
+optimizer.py: All expected
+Tasks done:   9. New data added to dataset: [[ 0.14285714  0.71428571  1.7724077 ]]
+optimizer.py: All expected
+Tasks done:  10. New data added to dataset: [[ 0.14285714  0.71428571  1.7744129 ]]
+optimizer.py: All expected
+Tasks done:  11. New data added to dataset: [[ 0.14285714  0.71428571  1.77311097]]
+optimizer.py: All expected
+Tasks done:  12. New data added to dataset: [[ 0.14285714  0.71428571  1.77463767]]
+optimizer.py: All expected
+Tasks done:  13. New data added to dataset: [[ 0.14285714  0.71428571  1.77440819]]
+optimizer.py: All expected
+Tasks done:  14. New data added to dataset: [[ 0.14285714  0.71428571  1.77353709]]
+optimizer.py: All expected
+Tasks done:  15. New data added to dataset: [[ 0.14285714  0.71428571  1.77116429]]
+optimizer.py: All expected
+Tasks done:  16. New data added to dataset: [[ 0.14285714  0.71428571  1.77205678]]
+optimizer.py: All expected
+Tasks done:  17. New data added to dataset: [[ 0.14285714  0.71428571  1.77255933]]
+optimizer.py: All expected
+Tasks done:  18. New data added to dataset: [[ 0.14285714  0.71428571  1.77525492]]
+optimizer.py: All expected
+Tasks done:  19. New data added to dataset: [[ 0.14285714  0.71428571  1.77269511]]
+optimizer.py: All expected
+Tasks done:  20. New data added to dataset: [[ 0.14285714  0.71428571  1.77399189]]
+optimizer.py: All expected
+Tasks done:  21. New data added to dataset: [[ 0.14285714  0.71428571  1.7724249 ]]
+optimizer.py: All expected
+Tasks done:  22. New data added to dataset: [[ 0.14285714  0.71428571  1.77332531]]
+optimizer.py: All expected
+Tasks done:  23. New data added to dataset: [[ 0.14285714  0.71428571  1.77304213]]
+optimizer.py: All expected
+Tasks done:  24. New data added to dataset: [[ 0.14285714  0.71428571  1.77332129]]
+optimizer.py: All expected
+Tasks done:  25. New data added to dataset: [[ 0.14285714  0.71428571  1.77311459]]
+optimizer.py: All expected
+Tasks done:  26. New data added to dataset: [[ 0.14285714  0.71428571  1.77242035]]
+optimizer.py: All expected
+Tasks done:  27. New data added to dataset: [[ 0.14285714  0.71428571  1.7726304 ]]
+optimizer.py: All expected
+Tasks done:  28. New data added to dataset: [[ 0.14285714  0.71428571  1.77400205]]
+optimizer.py: All expected
+Tasks done:  29. New data added to dataset: [[ 0.14285714  0.71428571  1.77394663]]
+optimizer.py: All expected
+Tasks done:  30. New data added to dataset: [[ 0.14285714  0.71428571  1.77281176]]
+optimizer.py: All expected
+Tasks done:  31. New data added to dataset: [[ 0.14285714  0.71428571  1.7740102 ]]
+optimizer.py: All expected
+Tasks done:  32. New data added to dataset: [[ 0.14285714  0.71428571  1.77356447]]
+optimizer.py: All expected
+Tasks done:  33. New data added to dataset: [[ 0.14285714  0.71428571  1.77391915]]
+optimizer.py: All expected
+Tasks done:  34. New data added to dataset: [[ 0.14285714  0.71428571  1.7728844 ]]
+optimizer.py: All expected
+Tasks done:  35. New data added to dataset: [[ 0.14285714  0.71428571  1.77351861]]
+optimizer.py: All expected
+Tasks done:  36. New data added to dataset: [[ 0.14285714  0.71428571  1.77079341]]
+optimizer.py: All expected
+Tasks done:  37. New data added to dataset: [[ 0.14285714  0.71428571  1.77402176]]
+optimizer.py: All expected
+Tasks done:  38. New data added to dataset: [[ 0.14285714  0.71428571  1.77433682]]
+optimizer.py: All expected
+Tasks done:  39. New data added to dataset: [[ 0.14285714  0.71428571  1.77354175]]
+optimizer.py: All expected
+Tasks done:  40. New data added to dataset: [[ 0.14285714  0.71428571  1.77291232]]
+optimizer.py: All expected
+Tasks done:  41. New data added to dataset: [[ 0.14285714  0.71428571  1.77509372]]
+optimizer.py: All expected
+Tasks done:  42. New data added to dataset: [[ 0.14285714  0.71428571  1.7745209 ]]
+optimizer.py: All expected
+Tasks done:  43. New data added to dataset: [[ 0.14285714  0.71428571  1.77323397]]
+optimizer.py: All expected
+Tasks done:  44. New data added to dataset: [[ 0.14285714  0.71428571  1.77212365]]
+optimizer.py: All expected
+Tasks done:  45. New data added to dataset: [[ 0.14285714  0.71428571  1.77247612]]
+optimizer.py: All expected
+Tasks done:  46. New data added to dataset: [[ 0.14285714  0.71428571  1.7735121 ]]
+optimizer.py: All expected
+Tasks done:  47. New data added to dataset: [[ 0.14285714  0.71428571  1.77310218]]
+optimizer.py: All expected
+Tasks done:  48. New data added to dataset: [[ 0.14285714  0.71428571  1.77119856]]
+optimizer.py: All expected
+Tasks done:  49. New data added to dataset: [[ 0.14285714  0.71428571  1.77281823]]
+optimizer.py: All expected
+Tasks done:  50. New data added to dataset: [[ 0.14285714  0.71428571  1.77422012]]
+optimizer.py: All expected
+Tasks done:  51. New data added to dataset: [[ 0.14285714  0.71428571  1.77286129]]
+optimizer.py: All expected
+Tasks done:  52. New data added to dataset: [[ 0.14285714  0.71428571  1.77566846]]
+optimizer.py: All expected
+Tasks done:  53. New data added to dataset: [[ 0.14285714  0.71428571  1.77179452]]
+optimizer.py: All expected
+Tasks done:  54. New data added to dataset: [[ 0.14285714  0.71428571  1.77197967]]
+optimizer.py: All expected
+Tasks done:  55. New data added to dataset: [[ 0.14285714  0.71428571  1.77416726]]
+optimizer.py: All expected
+Tasks done:  56. New data added to dataset: [[ 0.14285714  0.71428571  1.77362115]]
+optimizer.py: All expected
+Tasks done:  57. New data added to dataset: [[ 0.14285714  0.71428571  1.77218971]]
+optimizer.py: All expected
+Tasks done:  58. New data added to dataset: [[ 0.14285714  0.71428571  1.77451432]]
+optimizer.py: All expected
+Tasks done:  59. New data added to dataset: [[ 0.14285714  0.71428571  1.77322222]]
+optimizer.py: All expected
+Tasks done:  60. New data added to dataset: [[ 0.14285714  0.71428571  1.7725906 ]]
+optimizer.py: All expected
+Tasks done:  61. New data added to dataset: [[ 0.14285714  0.71428571  1.77342895]]
+optimizer.py: All expected
+Tasks done:  62. New data added to dataset: [[ 0.14285714  0.71428571  1.77137432]]
+optimizer.py: All expected
+Tasks done:  63. New data added to dataset: [[ 0.14285714  0.71428571  1.77318289]]
+optimizer.py: All expected
+Tasks done:  64. New data added to dataset: [[ 0.14285714  0.71428571  1.77266592]]
+optimizer.py: All expected
+Tasks done:  65. New data added to dataset: [[ 0.14285714  0.71428571  1.77315499]]
+optimizer.py: All expected
+Tasks done:  66. New data added to dataset: [[ 0.14285714  0.71428571  1.77265054]]
+optimizer.py: All expected
+Tasks done:  67. New data added to dataset: [[ 0.14285714  0.71428571  1.77295475]]
+optimizer.py: All expected
+Tasks done:  68. New data added to dataset: [[ 0.14285714  0.71428571  1.77286373]]
+optimizer.py: All expected
+Tasks done:  69. New data added to dataset: [[ 0.14285714  0.71428571  1.77198692]]
+optimizer.py: All expected
+Tasks done:  70. New data added to dataset: [[ 0.14285714  0.71428571  1.77350525]]
+optimizer.py: All expected
+Tasks done:  71. New data added to dataset: [[ 0.14285714  0.71428571  1.77255304]]
+optimizer.py: All expected
+Tasks done:  72. New data added to dataset: [[ 0.14285714  0.71428571  1.77355752]]
+optimizer.py: All expected
+Tasks done:  73. New data added to dataset: [[ 0.14285714  0.71428571  1.77353755]]
+optimizer.py: All expected
+Tasks done:  74. New data added to dataset: [[ 0.14285714  0.71428571  1.77177936]]
+optimizer.py: All expected
+Tasks done:  75. New data added to dataset: [[ 0.14285714  0.71428571  1.77263628]]
+optimizer.py: All expected
+Tasks done:  76. New data added to dataset: [[ 0.14285714  0.71428571  1.77384344]]
+optimizer.py: All expected
+Tasks done:  77. New data added to dataset: [[ 0.14285714  0.71428571  1.77314132]]
+optimizer.py: All expected
+Tasks done:  78. New data added to dataset: [[ 0.14285714  0.71428571  1.77330253]]
+optimizer.py: All expected
+Tasks done:  79. New data added to dataset: [[ 0.14285714  0.71428571  1.77381903]]
+optimizer.py: All expected
+Tasks done:  80. New data added to dataset: [[ 0.14285714  0.71428571  1.77165319]]
+optimizer.py: All expected
+Tasks done:  81. New data added to dataset: [[ 0.14285714  0.71428571  1.77275509]]
+optimizer.py: All expected
+Tasks done:  82. New data added to dataset: [[ 0.14285714  0.71428571  1.77420276]]
+optimizer.py: All expected
+Tasks done:  83. New data added to dataset: [[ 0.14285714  0.71428571  1.77322369]]
+optimizer.py: All expected
+Tasks done:  84. New data added to dataset: [[ 0.14285714  0.71428571  1.77424155]]
+optimizer.py: All expected
+Tasks done:  85. New data added to dataset: [[ 0.14285714  0.71428571  1.77391083]]
+optimizer.py: All expected
+Tasks done:  86. New data added to dataset: [[ 0.14285714  0.71428571  1.77333805]]
+optimizer.py: All expected
+Tasks done:  87. New data added to dataset: [[ 0.14285714  0.71428571  1.77422988]]
+optimizer.py: All expected
+Tasks done:  88. New data added to dataset: [[ 0.14285714  0.71428571  1.77297203]]
+optimizer.py: All expected
+Tasks done:  89. New data added to dataset: [[ 0.14285714  0.71428571  1.77219282]]
+optimizer.py: All expected
+Tasks done:  90. New data added to dataset: [[ 0.14285714  0.71428571  1.77302795]]
+optimizer.py: All expected
+Tasks done:  91. New data added to dataset: [[ 0.14285714  0.71428571  1.77431505]]
+optimizer.py: All expected
+Tasks done:  92. New data added to dataset: [[ 0.14285714  0.71428571  1.77377631]]
+optimizer.py: All expected
+Tasks done:  93. New data added to dataset: [[ 0.14285714  0.71428571  1.77350622]]
+optimizer.py: All expected
+Tasks done:  94. New data added to dataset: [[ 0.14285714  0.71428571  1.77346727]]
+optimizer.py: All expected
+Tasks done:  95. New data added to dataset: [[ 0.14285714  0.71428571  1.77321001]]
+optimizer.py: All expected
+Tasks done:  96. New data added to dataset: [[ 0.14285714  0.71428571  1.77296686]]
+optimizer.py: All expected
+Tasks done:  97. New data added to dataset: [[ 0.14285714  0.71428571  1.7742904 ]]
+optimizer.py: All expected
+Tasks done:  98. New data added to dataset: [[ 0.14285714  0.71428571  1.77257454]]
+optimizer.py: All expected
+Tasks done:  99. New data added to dataset: [[ 0.14285714  0.71428571  1.77441193]]
+optimizer.py: All expected
+Tasks done: 100. New data added to dataset: [[ 0.14285714  0.71428571  1.77167501]]
+optimizer.py: All expected
+Tasks done: 101. New data added to dataset: [[ 0.14285714  0.71428571  1.77189455]]
+optimizer.py: All expected
+Tasks done: 102. New data added to dataset: [[ 0.14285714  0.71428571  1.77300205]]
+optimizer.py: All expected
+Tasks done: 103. New data added to dataset: [[ 0.14285714  0.71428571  1.77321924]]
+optimizer.py: All expected
+Tasks done: 104. New data added to dataset: [[ 0.14285714  0.71428571  1.77365326]]
+optimizer.py: All expected
+Tasks done: 105. New data added to dataset: [[ 0.14285714  0.71428571  1.77092644]]
+optimizer.py: All expected
+Tasks done: 106. New data added to dataset: [[ 0.14285714  0.71428571  1.77278241]]
+optimizer.py: All expected
+Tasks done: 107. New data added to dataset: [[ 0.14285714  0.71428571  1.77319989]]
+optimizer.py: All expected
+Tasks done: 108. New data added to dataset: [[ 0.14285714  0.71428571  1.77319084]]
+optimizer.py: All expected
+Tasks done: 109. New data added to dataset: [[ 0.14285714  0.71428571  1.7730558 ]]
+optimizer.py: All expected
+Tasks done: 110. New data added to dataset: [[ 0.14285714  0.71428571  1.77408795]]
+optimizer.py: All expected
+Tasks done: 111. New data added to dataset: [[ 0.14285714  0.71428571  1.77197983]]
+optimizer.py: All expected
+Tasks done: 112. New data added to dataset: [[ 0.14285714  0.71428571  1.77429358]]
+optimizer.py: All expected
+Tasks done: 113. New data added to dataset: [[ 0.14285714  0.71428571  1.77406138]]
+optimizer.py: All expected
+Tasks done: 114. New data added to dataset: [[ 0.14285714  0.71428571  1.77315355]]
+optimizer.py: All expected
+Tasks done: 115. New data added to dataset: [[ 0.14285714  0.71428571  1.77331383]]
+optimizer.py: All expected
+Tasks done: 116. New data added to dataset: [[ 0.14285714  0.71428571  1.77215663]]
+optimizer.py: All expected
+Tasks done: 117. New data added to dataset: [[ 0.14285714  0.71428571  1.77284836]]
+optimizer.py: All expected
+Tasks done: 118. New data added to dataset: [[ 0.14285714  0.71428571  1.77356555]]
+optimizer.py: All expected
+Tasks done: 119. New data added to dataset: [[ 0.14285714  0.71428571  1.77207542]]
+optimizer.py: All expected
+Tasks done: 120. New data added to dataset: [[ 0.14285714  0.71428571  1.77302436]]
+optimizer.py: All expected
+Tasks done: 121. New data added to dataset: [[ 0.14285714  0.71428571  1.77271509]]
+optimizer.py: All expected
+Tasks done: 122. New data added to dataset: [[ 0.14285714  0.71428571  1.7723061 ]]
+optimizer.py: All expected
+Tasks done: 123. New data added to dataset: [[ 0.14285714  0.71428571  1.77333101]]
+optimizer.py: All expected
+Tasks done: 124. New data added to dataset: [[ 0.14285714  0.71428571  1.77504855]]
+optimizer.py: All expected
+Tasks done: 125. New data added to dataset: [[ 0.14285714  0.71428571  1.77405429]]
+optimizer.py: All expected
+Tasks done: 126. New data added to dataset: [[ 0.14285714  0.71428571  1.77384757]]
+optimizer.py: All expected
+Tasks done: 127. New data added to dataset: [[ 0.14285714  0.71428571  1.77314724]]
+optimizer.py: All expected
+Tasks done: 128. New data added to dataset: [[ 0.14285714  0.71428571  1.77395944]]
+optimizer.py: All expected
+Tasks done: 129. New data added to dataset: [[ 0.14285714  0.71428571  1.77554086]]
+optimizer.py: All expected
+Tasks done: 130. New data added to dataset: [[ 0.14285714  0.71428571  1.77370813]]
+optimizer.py: All expected
+Tasks done: 131. New data added to dataset: [[ 0.14285714  0.71428571  1.7726699 ]]
+optimizer.py: All expected
+Tasks done: 132. New data added to dataset: [[ 0.14285714  0.71428571  1.77410714]]
+optimizer.py: All expected
+Tasks done: 133. New data added to dataset: [[ 0.14285714  0.71428571  1.77637137]]
+optimizer.py: All expected
+Tasks done: 134. New data added to dataset: [[ 1.          1.          0.67782131]]
+optimizer.py: All expected
+Tasks done: 135. New data added to dataset: [[ 0.14285714  0.71428571  1.77305793]]
+optimizer.py: All expected
+Tasks done: 136. New data added to dataset: [[ 0.14285714  0.71428571  1.7728683 ]]
+optimizer.py: All expected
+Tasks done: 137. New data added to dataset: [[ 0.14285714  0.71428571  1.77150132]]
+optimizer.py: All expected
+Tasks done: 138. New data added to dataset: [[ 0.14285714  0.71428571  1.77356422]]
+optimizer.py: All expected
+Tasks done: 139. New data added to dataset: [[ 0.14285714  0.71428571  1.7727535 ]]
+optimizer.py: All expected
+Tasks done: 140. New data added to dataset: [[ 0.14285714  0.71428571  1.77298816]]
+optimizer.py: All expected
+Tasks done: 141. New data added to dataset: [[ 0.14285714  0.71428571  1.77504393]]
+optimizer.py: All expected
+Tasks done: 142. New data added to dataset: [[ 0.14285714  0.71428571  1.77427565]]
+optimizer.py: All expected
+Tasks done: 143. New data added to dataset: [[ 0.14285714  0.71428571  1.77288113]]
+optimizer.py: All expected
+Tasks done: 144. New data added to dataset: [[ 0.14285714  0.71428571  1.77300115]]
+optimizer.py: All expected
+Tasks done: 145. New data added to dataset: [[ 0.14285714  0.71428571  1.7736094 ]]
+optimizer.py: All expected
+Tasks done: 146. New data added to dataset: [[ 0.14285714  0.71428571  1.77482515]]
+optimizer.py: All expected
+Tasks done: 147. New data added to dataset: [[ 0.14285714  0.71428571  1.77184926]]
+optimizer.py: All expected
+Tasks done: 148. New data added to dataset: [[ 0.14285714  0.71428571  1.77407479]]
+optimizer.py: All expected
+Tasks done: 149. New data added to dataset: [[ 0.14285714  0.71428571  1.77404994]]
+optimizer.py: All expected
+Tasks done: 150. New data added to dataset: [[ 0.14285714  0.71428571  1.77157953]]
+optimizer.py: All expected
+Tasks done: 151. New data added to dataset: [[ 0.14285714  0.71428571  1.77284076]]
+optimizer.py: All expected
+Tasks done: 152. New data added to dataset: [[ 0.14285714  0.71428571  1.77363864]]
+optimizer.py: All expected
+Tasks done: 153. New data added to dataset: [[ 0.14285714  0.71428571  1.77392049]]
+optimizer.py: All expected
+Tasks done: 154. New data added to dataset: [[ 0.14285714  0.71428571  1.77320038]]
+optimizer.py: All expected
+Tasks done: 155. New data added to dataset: [[ 0.14285714  0.71428571  1.77317932]]
+optimizer.py: All expected
+Tasks done: 156. New data added to dataset: [[ 0.14285714  0.71428571  1.77282237]]
+optimizer.py: All expected
+Tasks done: 157. New data added to dataset: [[ 0.14285714  0.71428571  1.77455191]]
+optimizer.py: All expected
+Tasks done: 158. New data added to dataset: [[ 0.14285714  0.71428571  1.77237013]]
+optimizer.py: All expected
+Tasks done: 159. New data added to dataset: [[ 0.14285714  0.71428571  1.772373  ]]
+optimizer.py: All expected
+Tasks done: 160. New data added to dataset: [[ 0.14285714  0.71428571  1.77395246]]
+optimizer.py: All expected
+Tasks done: 161. New data added to dataset: [[ 0.14285714  0.71428571  1.77314285]]
+optimizer.py: All expected
+Tasks done: 162. New data added to dataset: [[ 0.14285714  0.71428571  1.77228676]]
+optimizer.py: All expected
+Tasks done: 163. New data added to dataset: [[ 0.14285714  0.71428571  1.77182932]]
+optimizer.py: All expected
+Tasks done: 164. New data added to dataset: [[ 0.14285714  0.71428571  1.77243614]]
+optimizer.py: All expected
+Tasks done: 165. New data added to dataset: [[ 0.14285714  0.71428571  1.77361763]]
+optimizer.py: All expected
+Tasks done: 166. New data added to dataset: [[ 0.14285714  0.71428571  1.77259526]]
+optimizer.py: All expected
+Tasks done: 167. New data added to dataset: [[ 0.14285714  0.71428571  1.77101356]]
+optimizer.py: All expected
+Tasks done: 168. New data added to dataset: [[ 0.14285714  0.71428571  1.77194375]]
+optimizer.py: All expected
+Tasks done: 169. New data added to dataset: [[ 0.14285714  0.71428571  1.77357885]]
+optimizer.py: All expected
+Tasks done: 170. New data added to dataset: [[ 0.14285714  0.71428571  1.77169432]]
+optimizer.py: All expected
+Tasks done: 171. New data added to dataset: [[ 0.14285714  0.71428571  1.77225158]]
+optimizer.py: All expected
+Tasks done: 172. New data added to dataset: [[ 0.14285714  0.71428571  1.77368774]]
+optimizer.py: All expected
+Tasks done: 173. New data added to dataset: [[ 0.14285714  0.71428571  1.77219927]]
+optimizer.py: All expected
+Tasks done: 174. New data added to dataset: [[ 0.14285714  0.71428571  1.77425063]]
+optimizer.py: All expected
+Tasks done: 175. New data added to dataset: [[ 0.14285714  0.71428571  1.7739612 ]]
+optimizer.py: All expected
+Tasks done: 176. New data added to dataset: [[ 0.14285714  0.71428571  1.7745425 ]]
+optimizer.py: All expected
+Tasks done: 177. New data added to dataset: [[ 0.14285714  0.71428571  1.77222561]]
+optimizer.py: All expected
+Tasks done: 178. New data added to dataset: [[ 0.14285714  0.71428571  1.77493919]]
+optimizer.py: All expected
+Tasks done: 179. New data added to dataset: [[ 0.14285714  0.71428571  1.77240522]]
+optimizer.py: All expected
+Tasks done: 180. New data added to dataset: [[ 0.14285714  0.71428571  1.77420254]]
+optimizer.py: All expected
+Tasks done: 181. New data added to dataset: [[ 0.14285714  0.71428571  1.77371088]]
+optimizer.py: All expected
+Tasks done: 182. New data added to dataset: [[ 0.14285714  0.71428571  1.77230892]]
+optimizer.py: All expected
+Tasks done: 183. New data added to dataset: [[ 0.14285714  0.71428571  1.77171533]]
+optimizer.py: All expected
+Tasks done: 184. New data added to dataset: [[ 0.14285714  0.71428571  1.77322603]]
+optimizer.py: All expected
+Tasks done: 185. New data added to dataset: [[ 0.14285714  0.71428571  1.77232066]]
+optimizer.py: All expected
+Tasks done: 186. New data added to dataset: [[ 0.14285714  0.71428571  1.77279114]]
+optimizer.py: All expected
+Tasks done: 187. New data added to dataset: [[ 0.14285714  0.71428571  1.77466874]]
+optimizer.py: All expected
+Tasks done: 188. New data added to dataset: [[ 0.14285714  0.71428571  1.77420845]]
+optimizer.py: All expected
+Tasks done: 189. New data added to dataset: [[ 0.14285714  0.71428571  1.7734787 ]]
+optimizer.py: All expected
+Tasks done: 190. New data added to dataset: [[ 0.14285714  0.71428571  1.77316731]]
+optimizer.py: All expected
+Tasks done: 191. New data added to dataset: [[ 0.14285714  0.71428571  1.77546581]]
+optimizer.py: All expected
+Tasks done: 192. New data added to dataset: [[ 0.14285714  0.71428571  1.77286113]]
+optimizer.py: All expected
+Tasks done: 193. New data added to dataset: [[ 0.14285714  0.71428571  1.77392655]]
+optimizer.py: All expected
+Tasks done: 194. New data added to dataset: [[ 0.14285714  0.71428571  1.77372703]]
+optimizer.py: All expected
+Tasks done: 195. New data added to dataset: [[ 0.14285714  0.71428571  1.77214495]]
+optimizer.py: All expected
+Tasks done: 196. New data added to dataset: [[ 0.14285714  0.71428571  1.77426565]]
+optimizer.py: All expected
+Tasks done: 197. New data added to dataset: [[ 0.14285714  0.71428571  1.77252745]]
+optimizer.py: All expected
+Tasks done: 198. New data added to dataset: [[ 0.14285714  0.71428571  1.77231213]]
+optimizer.py: All expected
+Tasks done: 199. New data added to dataset: [[ 0.14285714  0.71428571  1.77436739]]
+optimizer.py: All expected
+Tasks done: 200. New data added to dataset: [[ 0.14285714  0.71428571  1.77399282]]
+optimizer.py: All expected
+Tasks done: 201. New data added to dataset: [[ 0.14285714  0.71428571  1.77408383]]
+optimizer.py: All expected
+Tasks done: 202. New data added to dataset: [[ 0.14285714  0.71428571  1.77445189]]
+optimizer.py: All expected
+Tasks done: 203. New data added to dataset: [[ 0.14285714  0.71428571  1.77331145]]
+optimizer.py: All expected
+Tasks done: 204. New data added to dataset: [[ 0.14285714  0.71428571  1.77250366]]
+optimizer.py: All expected
+Tasks done: 205. New data added to dataset: [[ 0.14285714  0.71428571  1.7729419 ]]
+optimizer.py: All expected
+Tasks done: 206. New data added to dataset: [[ 0.14285714  0.71428571  1.7733402 ]]
+optimizer.py: All expected
+Tasks done: 207. New data added to dataset: [[ 0.14285714  0.71428571  1.77169372]]
+optimizer.py: All expected
+Tasks done: 208. New data added to dataset: [[ 0.14285714  0.71428571  1.77301837]]
+optimizer.py: All expected
+Tasks done: 209. New data added to dataset: [[ 0.14285714  0.71428571  1.77332574]]
+optimizer.py: All expected
+Tasks done: 210. New data added to dataset: [[ 0.14285714  0.71428571  1.7738248 ]]
+optimizer.py: All expected
+Tasks done: 211. New data added to dataset: [[ 0.14285714  0.71428571  1.77356369]]
+optimizer.py: All expected
+Tasks done: 212. New data added to dataset: [[ 0.14285714  0.71428571  1.77259187]]
+optimizer.py: All expected
+Tasks done: 213. New data added to dataset: [[ 0.14285714  0.71428571  1.77446181]]
+optimizer.py: All expected
+Tasks done: 214. New data added to dataset: [[ 0.14285714  0.71428571  1.77223416]]
+optimizer.py: All expected
+Tasks done: 215. New data added to dataset: [[ 0.14285714  0.71428571  1.77258765]]
+optimizer.py: All expected
+Tasks done: 216. New data added to dataset: [[ 0.14285714  0.71428571  1.77476342]]
+optimizer.py: All expected
+Tasks done: 217. New data added to dataset: [[ 0.14285714  0.71428571  1.77325651]]
+optimizer.py: All expected
+Tasks done: 218. New data added to dataset: [[ 0.14285714  0.71428571  1.77450784]]
+optimizer.py: All expected
+Tasks done: 219. New data added to dataset: [[ 0.14285714  0.71428571  1.77031995]]
+optimizer.py: All expected
+Tasks done: 220. New data added to dataset: [[ 0.14285714  0.71428571  1.77270656]]
+optimizer.py: All expected
+Tasks done: 221. New data added to dataset: [[ 0.14285714  0.71428571  1.77348853]]
+optimizer.py: All expected
+Tasks done: 222. New data added to dataset: [[ 0.14285714  0.71428571  1.77248111]]
+optimizer.py: All expected
+Tasks done: 223. New data added to dataset: [[ 0.14285714  0.71428571  1.77118649]]
+optimizer.py: All expected
+Tasks done: 224. New data added to dataset: [[ 0.14285714  0.71428571  1.77353697]]
+optimizer.py: All expected
+Tasks done: 225. New data added to dataset: [[ 0.14285714  0.71428571  1.77388691]]
+optimizer.py: All expected
+Tasks done: 226. New data added to dataset: [[ 0.14285714  0.71428571  1.7729687 ]]
+optimizer.py: All expected
+Tasks done: 227. New data added to dataset: [[ 0.14285714  0.71428571  1.77141351]]
+optimizer.py: All expected
+Tasks done: 228. New data added to dataset: [[ 0.14285714  0.71428571  1.77378183]]
+optimizer.py: All expected
+Tasks done: 229. New data added to dataset: [[ 0.14285714  0.71428571  1.77295874]]
+optimizer.py: All expected
+Tasks done: 230. New data added to dataset: [[ 0.14285714  0.71428571  1.7729923 ]]
+optimizer.py: All expected
+Tasks done: 231. New data added to dataset: [[ 0.14285714  0.71428571  1.77201302]]
+optimizer.py: All expected
+Tasks done: 232. New data added to dataset: [[ 0.14285714  0.71428571  1.77406335]]
+optimizer.py: All expected
+Tasks done: 233. New data added to dataset: [[ 0.14285714  0.71428571  1.77328662]]
+optimizer.py: All expected
+Tasks done: 234. New data added to dataset: [[ 0.14285714  0.71428571  1.77284554]]
+optimizer.py: All expected
+Tasks done: 235. New data added to dataset: [[ 0.14285714  0.71428571  1.77108928]]
+optimizer.py: All expected
+Tasks done: 236. New data added to dataset: [[ 0.14285714  0.71428571  1.77381174]]
+optimizer.py: All expected
+Tasks done: 237. New data added to dataset: [[ 0.14285714  0.71428571  1.77329082]]
+optimizer.py: All expected
+Tasks done: 238. New data added to dataset: [[ 0.14285714  0.71428571  1.77527622]]
+optimizer.py: All expected
+Tasks done: 239. New data added to dataset: [[ 0.14285714  0.71428571  1.77232391]]
+optimizer.py: All expected
+Tasks done: 240. New data added to dataset: [[ 0.14285714  0.71428571  1.77301626]]
+optimizer.py: All expected
+Tasks done: 241. New data added to dataset: [[ 0.14285714  0.71428571  1.77297406]]
+optimizer.py: All expected
+Tasks done: 242. New data added to dataset: [[ 0.14285714  0.71428571  1.77371594]]
+optimizer.py: All expected
+Tasks done: 243. New data added to dataset: [[ 0.14285714  0.71428571  1.77259632]]
+optimizer.py: All expected
+Tasks done: 244. New data added to dataset: [[ 0.14285714  0.71428571  1.77396683]]
+optimizer.py: All expected
+Tasks done: 245. New data added to dataset: [[ 0.14285714  0.71428571  1.774284  ]]
+optimizer.py: All expected
+Tasks done: 246. New data added to dataset: [[ 0.14285714  0.71428571  1.77283575]]
+optimizer.py: All expected
+Tasks done: 247. New data added to dataset: [[ 0.14285714  0.71428571  1.77407294]]
+optimizer.py: All expected
+Tasks done: 248. New data added to dataset: [[ 0.14285714  0.71428571  1.77307065]]
+optimizer.py: All expected
+Tasks done: 249. New data added to dataset: [[ 0.14285714  0.71428571  1.77468759]]
+optimizer.py: All expected
+Tasks done: 250. New data added to dataset: [[ 0.14285714  0.71428571  1.7725184 ]]
+optimizer.py: All expected
+Tasks done: 251. New data added to dataset: [[ 0.14285714  0.71428571  1.77315172]]
+optimizer.py: All expected
+Tasks done: 252. New data added to dataset: [[ 0.14285714  0.71428571  1.772525  ]]
+optimizer.py: All expected
+Tasks done: 253. New data added to dataset: [[ 0.14285714  0.71428571  1.77222768]]
+optimizer.py: All expected
+Tasks done: 254. New data added to dataset: [[ 0.14285714  0.71428571  1.77517399]]
+optimizer.py: All expected
+Tasks done: 255. New data added to dataset: [[ 0.14285714  0.71428571  1.7721307 ]]
+optimizer.py: All expected
+Tasks done: 256. New data added to dataset: [[ 0.14285714  0.71428571  1.77258756]]
+optimizer.py: All expected
+Tasks done: 257. New data added to dataset: [[ 0.14285714  0.71428571  1.7735561 ]]
+optimizer.py: All expected
+Tasks done: 258. New data added to dataset: [[ 0.14285714  0.71428571  1.77219649]]
+optimizer.py: All expected
+Tasks done: 259. New data added to dataset: [[ 0.14285714  0.71428571  1.77318097]]
+optimizer.py: All expected
+Tasks done: 260. New data added to dataset: [[ 0.14285714  0.71428571  1.77287612]]
+optimizer.py: All expected
+Tasks done: 261. New data added to dataset: [[ 0.14285714  0.71428571  1.77355394]]
+optimizer.py: All expected
+Tasks done: 262. New data added to dataset: [[ 0.14285714  0.71428571  1.77472454]]
+optimizer.py: All expected
+Tasks done: 263. New data added to dataset: [[ 0.14285714  0.71428571  1.77338204]]
+optimizer.py: All expected
+Tasks done: 264. New data added to dataset: [[ 0.14285714  0.71428571  1.77331067]]
+optimizer.py: All expected
+Tasks done: 265. New data added to dataset: [[ 0.14285714  0.71428571  1.77323551]]
+optimizer.py: All expected
+Tasks done: 266. New data added to dataset: [[ 0.14285714  0.71428571  1.7725744 ]]
+optimizer.py: All expected
+Tasks done: 267. New data added to dataset: [[ 0.14285714  0.71428571  1.77162245]]
+optimizer.py: All expected
+Tasks done: 268. New data added to dataset: [[ 0.14285714  0.71428571  1.77316806]]
+optimizer.py: All expected
+Tasks done: 269. New data added to dataset: [[ 0.14285714  0.71428571  1.77459613]]
+optimizer.py: All expected
+Tasks done: 270. New data added to dataset: [[ 0.14285714  0.71428571  1.7729486 ]]
+optimizer.py: All expected
+Tasks done: 271. New data added to dataset: [[ 0.14285714  0.71428571  1.7733262 ]]
+optimizer.py: All expected
+Tasks done: 272. New data added to dataset: [[ 0.14285714  0.71428571  1.77294589]]
+optimizer.py: All expected
+Tasks done: 273. New data added to dataset: [[ 0.14285714  0.71428571  1.77260082]]
+optimizer.py: All expected
+Tasks done: 274. New data added to dataset: [[ 0.14285714  0.71428571  1.77312631]]
+optimizer.py: All expected
+Tasks done: 275. New data added to dataset: [[ 0.14285714  0.71428571  1.77280715]]
+optimizer.py: All expected
+Tasks done: 276. New data added to dataset: [[ 0.14285714  0.71428571  1.77239696]]
+optimizer.py: All expected
+Tasks done: 277. New data added to dataset: [[ 0.14285714  0.71428571  1.77234223]]
+optimizer.py: All expected
+Tasks done: 278. New data added to dataset: [[ 0.14285714  0.71428571  1.77317935]]
+optimizer.py: All expected
+Tasks done: 279. New data added to dataset: [[ 0.14285714  0.71428571  1.77280209]]
+optimizer.py: All expected
+Tasks done: 280. New data added to dataset: [[ 0.14285714  0.71428571  1.77272094]]
+optimizer.py: All expected
+Tasks done: 281. New data added to dataset: [[ 0.14285714  0.71428571  1.77331224]]
+optimizer.py: All expected
+Tasks done: 282. New data added to dataset: [[ 0.14285714  0.71428571  1.77280221]]
+optimizer.py: All expected
+Tasks done: 283. New data added to dataset: [[ 0.14285714  0.71428571  1.77441043]]
+optimizer.py: All expected
+Tasks done: 284. New data added to dataset: [[ 0.14285714  0.71428571  1.77499764]]
+optimizer.py: All expected
+Tasks done: 285. New data added to dataset: [[ 0.14285714  0.71428571  1.7743925 ]]
+optimizer.py: All expected
+Tasks done: 286. New data added to dataset: [[ 0.14285714  0.71428571  1.77620391]]
+optimizer.py: All expected
+Tasks done: 287. New data added to dataset: [[ 0.14285714  0.71428571  1.77547021]]
+optimizer.py: All expected
+Tasks done: 288. New data added to dataset: [[ 0.14285714  0.71428571  1.77362879]]
+optimizer.py: All expected
+Tasks done: 289. New data added to dataset: [[ 0.14285714  0.71428571  1.77425465]]
+optimizer.py: All expected
+Tasks done: 290. New data added to dataset: [[ 0.14285714  0.71428571  1.7734685 ]]
+optimizer.py: All expected
+Tasks done: 291. New data added to dataset: [[ 0.14285714  0.71428571  1.77344727]]
+optimizer.py: All expected
+Tasks done: 292. New data added to dataset: [[ 0.14285714  0.71428571  1.77207305]]
+optimizer.py: All expected
+Tasks done: 293. New data added to dataset: [[ 0.14285714  0.71428571  1.77428881]]
+optimizer.py: All expected
+Tasks done: 294. New data added to dataset: [[ 0.14285714  0.71428571  1.77372297]]
+optimizer.py: All expected
+Tasks done: 295. New data added to dataset: [[ 0.14285714  0.71428571  1.77402579]]
+optimizer.py: All expected
+Tasks done: 296. New data added to dataset: [[ 0.14285714  0.71428571  1.7732174 ]]
+optimizer.py: All expected
+Tasks done: 297. New data added to dataset: [[ 0.14285714  0.71428571  1.77313882]]
+optimizer.py: All expected
+Tasks done: 298. New data added to dataset: [[ 0.14285714  0.71428571  1.77350923]]
+optimizer.py: All expected
+Tasks done: 299. New data added to dataset: [[ 0.14285714  0.71428571  1.77200242]]
+optimizer.py: All expected
+Tasks done: 300. New data added to dataset: [[ 0.14285714  0.71428571  1.77299449]]
+optimizer.py: All expected
+Tasks done: 301. New data added to dataset: [[ 0.14285714  0.71428571  1.77369057]]
+optimizer.py: All expected
+Tasks done: 302. New data added to dataset: [[ 0.14285714  0.71428571  1.77296388]]
+optimizer.py: All expected
+Tasks done: 303. New data added to dataset: [[ 0.14285714  0.71428571  1.77237877]]
+optimizer.py: All expected
+Tasks done: 304. New data added to dataset: [[ 0.14285714  0.71428571  1.77360658]]
+optimizer.py: All expected
+Tasks done: 305. New data added to dataset: [[ 0.14285714  0.71428571  1.77165684]]
+optimizer.py: All expected
+Tasks done: 306. New data added to dataset: [[ 0.14285714  0.71428571  1.77418011]]
+optimizer.py: All expected
+Tasks done: 307. New data added to dataset: [[ 0.14285714  0.71428571  1.77346071]]
+optimizer.py: All expected
+Tasks done: 308. New data added to dataset: [[ 0.14285714  0.71428571  1.77424408]]
+optimizer.py: All expected
+Tasks done: 309. New data added to dataset: [[ 0.14285714  0.71428571  1.77278983]]
+optimizer.py: All expected
+Tasks done: 310. New data added to dataset: [[ 0.14285714  0.71428571  1.77298948]]
+optimizer.py: All expected
+Tasks done: 311. New data added to dataset: [[ 0.14285714  0.71428571  1.77391078]]
+optimizer.py: All expected
+Tasks done: 312. New data added to dataset: [[ 0.14285714  0.71428571  1.77217153]]
+optimizer.py: All expected
+Tasks done: 313. New data added to dataset: [[ 0.14285714  0.71428571  1.77262247]]
+optimizer.py: All expected
+Tasks done: 314. New data added to dataset: [[ 0.14285714  0.71428571  1.77259869]]
+optimizer.py: All expected
+Tasks done: 315. New data added to dataset: [[ 0.14285714  0.71428571  1.77067523]]
+optimizer.py: All expected
+Tasks done: 316. New data added to dataset: [[ 0.14285714  0.71428571  1.772186  ]]
+optimizer.py: All expected
+Tasks done: 317. New data added to dataset: [[ 0.14285714  0.71428571  1.7738395 ]]
+optimizer.py: All expected
+Tasks done: 318. New data added to dataset: [[ 0.14285714  0.71428571  1.77272466]]
+optimizer.py: All expected
+Tasks done: 319. New data added to dataset: [[ 0.14285714  0.71428571  1.77391953]]
+optimizer.py: All expected
+Tasks done: 320. New data added to dataset: [[ 0.14285714  0.71428571  1.77411283]]
+optimizer.py: All expected
+Tasks done: 321. New data added to dataset: [[ 0.14285714  0.71428571  1.77372902]]
+optimizer.py: All expected
+Tasks done: 322. New data added to dataset: [[ 0.14285714  0.71428571  1.77492328]]
+optimizer.py: All expected
+Tasks done: 323. New data added to dataset: [[ 0.14285714  0.71428571  1.77581832]]
+optimizer.py: All expected
+Tasks done: 324. New data added to dataset: [[ 0.14285714  0.71428571  1.77410262]]
+optimizer.py: All expected
+Tasks done: 325. New data added to dataset: [[ 0.14285714  0.71428571  1.77194257]]
+optimizer.py: All expected
+Tasks done: 326. New data added to dataset: [[ 0.14285714  0.71428571  1.77148912]]
+optimizer.py: All expected
+Tasks done: 327. New data added to dataset: [[ 0.14285714  0.71428571  1.7730491 ]]
+optimizer.py: All expected
+Tasks done: 328. New data added to dataset: [[ 0.14285714  0.71428571  1.77343713]]
+optimizer.py: All expected
+Tasks done: 329. New data added to dataset: [[ 0.14285714  0.71428571  1.77258781]]
+optimizer.py: All expected
+Tasks done: 330. New data added to dataset: [[ 0.14285714  0.71428571  1.77180004]]
+optimizer.py: All expected
+Tasks done: 331. New data added to dataset: [[ 0.14285714  0.71428571  1.7722859 ]]
+optimizer.py: All expected
+Tasks done: 332. New data added to dataset: [[ 0.14285714  0.71428571  1.77268608]]
+optimizer.py: All expected
+Tasks done: 333. New data added to dataset: [[ 0.14285714  0.71428571  1.77426001]]
+optimizer.py: All expected
+Tasks done: 334. New data added to dataset: [[ 0.14285714  0.71428571  1.77287393]]
+optimizer.py: All expected
+Tasks done: 335. New data added to dataset: [[ 0.14285714  0.71428571  1.77272597]]
+optimizer.py: All expected
+Tasks done: 336. New data added to dataset: [[ 0.14285714  0.71428571  1.7725997 ]]
+optimizer.py: All expected
+Tasks done: 337. New data added to dataset: [[ 0.14285714  0.71428571  1.77200408]]
+optimizer.py: All expected
+Tasks done: 338. New data added to dataset: [[ 0.14285714  0.71428571  1.77366944]]
+optimizer.py: All expected
+Tasks done: 339. New data added to dataset: [[ 0.14285714  0.71428571  1.77407979]]
+optimizer.py: All expected
+Tasks done: 340. New data added to dataset: [[ 0.14285714  0.71428571  1.77441445]]
+optimizer.py: All expected
+Tasks done: 341. New data added to dataset: [[ 0.14285714  0.71428571  1.77141804]]
+optimizer.py: All expected
+Tasks done: 342. New data added to dataset: [[ 0.14285714  0.71428571  1.77313519]]
+optimizer.py: All expected
+Tasks done: 343. New data added to dataset: [[ 0.14285714  0.71428571  1.77382689]]
+optimizer.py: All expected
+Tasks done: 344. New data added to dataset: [[ 0.14285714  0.71428571  1.77287053]]
+optimizer.py: All expected
+Tasks done: 345. New data added to dataset: [[ 0.14285714  0.71428571  1.77206072]]
+optimizer.py: All expected
+Tasks done: 346. New data added to dataset: [[ 0.14285714  0.71428571  1.77244996]]
+optimizer.py: All expected
+Tasks done: 347. New data added to dataset: [[ 0.14285714  0.71428571  1.77193203]]
+optimizer.py: All expected
+Tasks done: 348. New data added to dataset: [[ 0.14285714  0.71428571  1.77188456]]
+optimizer.py: All expected
+Tasks done: 349. New data added to dataset: [[ 0.14285714  0.71428571  1.77511748]]
+optimizer.py: All expected
+Tasks done: 350. New data added to dataset: [[ 0.14285714  0.71428571  1.7732577 ]]
+optimizer.py: All expected
+Tasks done: 351. New data added to dataset: [[ 0.14285714  0.71428571  1.77348129]]
+optimizer.py: All expected
+Tasks done: 352. New data added to dataset: [[ 0.14285714  0.71428571  1.77170499]]
+optimizer.py: All expected
+Tasks done: 353. New data added to dataset: [[ 0.14285714  0.71428571  1.77274465]]
+optimizer.py: All expected
+Tasks done: 354. New data added to dataset: [[ 0.14285714  0.71428571  1.7743626 ]]
+optimizer.py: All expected
+Tasks done: 355. New data added to dataset: [[ 0.14285714  0.71428571  1.77222541]]
+optimizer.py: All expected
+Tasks done: 356. New data added to dataset: [[ 0.14285714  0.71428571  1.77399408]]
+optimizer.py: All expected
+Tasks done: 357. New data added to dataset: [[ 0.14285714  0.71428571  1.77314027]]
+optimizer.py: All expected
+Tasks done: 358. New data added to dataset: [[ 0.14285714  0.71428571  1.77361113]]
+optimizer.py: All expected
+Tasks done: 359. New data added to dataset: [[ 0.14285714  0.71428571  1.77430092]]
+optimizer.py: All expected
+Tasks done: 360. New data added to dataset: [[ 0.14285714  0.71428571  1.77310091]]
+optimizer.py: All expected
+Tasks done: 361. New data added to dataset: [[ 0.14285714  0.71428571  1.77388847]]
+optimizer.py: All expected
+Tasks done: 362. New data added to dataset: [[ 0.14285714  0.71428571  1.77366313]]
+optimizer.py: All expected
+Tasks done: 363. New data added to dataset: [[ 0.14285714  0.71428571  1.77353036]]
+optimizer.py: All expected
+Tasks done: 364. New data added to dataset: [[ 0.14285714  0.71428571  1.77198859]]
+optimizer.py: All expected
+Tasks done: 365. New data added to dataset: [[ 0.14285714  0.71428571  1.77324454]]
+optimizer.py: All expected
+Tasks done: 366. New data added to dataset: [[ 0.14285714  0.71428571  1.77379466]]
+optimizer.py: All expected
+Tasks done: 367. New data added to dataset: [[ 0.14285714  0.71428571  1.77368864]]
+optimizer.py: All expected
+Tasks done: 368. New data added to dataset: [[ 0.14285714  0.71428571  1.77429866]]
+optimizer.py: All expected
+Tasks done: 369. New data added to dataset: [[ 0.14285714  0.71428571  1.7722429 ]]
+optimizer.py: All expected
+Tasks done: 370. New data added to dataset: [[ 0.14285714  0.71428571  1.77295008]]
+optimizer.py: All expected
+Tasks done: 371. New data added to dataset: [[ 0.14285714  0.71428571  1.77224232]]
+optimizer.py: All expected
+Tasks done: 372. New data added to dataset: [[ 0.14285714  0.71428571  1.77352199]]
+optimizer.py: All expected
+Tasks done: 373. New data added to dataset: [[ 0.14285714  0.71428571  1.7727118 ]]
+optimizer.py: All expected
+Tasks done: 374. New data added to dataset: [[ 0.14285714  0.71428571  1.77362955]]
+optimizer.py: All expected
+Tasks done: 375. New data added to dataset: [[ 0.14285714  0.71428571  1.77282431]]
+optimizer.py: All expected
+Tasks done: 376. New data added to dataset: [[ 0.14285714  0.71428571  1.77443585]]
+optimizer.py: All expected
+Tasks done: 377. New data added to dataset: [[ 0.14285714  0.71428571  1.7736888 ]]
+optimizer.py: All expected
+Tasks done: 378. New data added to dataset: [[ 0.14285714  0.71428571  1.7727896 ]]
+optimizer.py: All expected
+Tasks done: 379. New data added to dataset: [[ 0.14285714  0.71428571  1.77263075]]
+optimizer.py: All expected
+Tasks done: 380. New data added to dataset: [[ 0.14285714  0.71428571  1.77330665]]
+optimizer.py: All expected
+Tasks done: 381. New data added to dataset: [[ 0.14285714  0.71428571  1.7735611 ]]
+optimizer.py: All expected
+Tasks done: 382. New data added to dataset: [[ 0.14285714  0.71428571  1.77241003]]
+optimizer.py: All expected
+Tasks done: 383. New data added to dataset: [[ 0.14285714  0.71428571  1.77190728]]
+optimizer.py: All expected
+Tasks done: 384. New data added to dataset: [[ 0.14285714  0.71428571  1.77365808]]
+optimizer.py: All expected
+Tasks done: 385. New data added to dataset: [[ 0.14285714  0.71428571  1.77140173]]
+optimizer.py: All expected
+Tasks done: 386. New data added to dataset: [[ 0.14285714  0.71428571  1.77195615]]
+optimizer.py: All expected
+Tasks done: 387. New data added to dataset: [[ 0.14285714  0.71428571  1.77346321]]
+optimizer.py: All expected
+Tasks done: 388. New data added to dataset: [[ 0.14285714  0.71428571  1.77433835]]
+optimizer.py: All expected
+Tasks done: 389. New data added to dataset: [[ 0.14285714  0.71428571  1.77333251]]
+optimizer.py: All expected
+Tasks done: 390. New data added to dataset: [[ 0.14285714  0.71428571  1.77402859]]
+optimizer.py: All expected
+Tasks done: 391. New data added to dataset: [[ 0.14285714  0.71428571  1.77202652]]
+optimizer.py: All expected
+Tasks done: 392. New data added to dataset: [[ 0.14285714  0.71428571  1.77182391]]
+optimizer.py: All expected
+Tasks done: 393. New data added to dataset: [[ 0.14285714  0.71428571  1.77223203]]
+optimizer.py: All expected
+Tasks done: 394. New data added to dataset: [[ 0.14285714  0.71428571  1.77395184]]
+optimizer.py: All expected
+Tasks done: 395. New data added to dataset: [[ 0.14285714  0.71428571  1.77441891]]
+optimizer.py: All expected
+Tasks done: 396. New data added to dataset: [[ 0.14285714  0.71428571  1.77426114]]
+optimizer.py: All expected
+Tasks done: 397. New data added to dataset: [[ 0.14285714  0.71428571  1.77404199]]
+optimizer.py: All expected
+Tasks done: 398. New data added to dataset: [[ 0.14285714  0.71428571  1.77268418]]
+optimizer.py: All expected
+Tasks done: 399. New data added to dataset: [[ 0.14285714  0.71428571  1.77370773]]
+optimizer.py: All expected
+Tasks done: 400. New data added to dataset: [[ 0.14285714  0.71428571  1.77388078]]
+optimizer.py: All expected
+Sequential gp optimization task complete.
+Best evaluated point is:
+[ 0.14285714  0.71428571  1.77637137]
+Predicted best point is:
+[ 0.14285714  0.71428571  1.77320859]

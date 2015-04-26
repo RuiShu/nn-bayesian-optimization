@@ -1,0 +1,79 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}}
+\citation{snoek-scalable}
+\newlabel{eq:opti}{{1}{2}{Introduction}{equation.1.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Background and Prior Work}{2}{section.2}}
+\newlabel{sec:back-prio-work}{{2}{2}{Background and Prior Work}{section.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Deep Learning Architectures and Regression}{3}{section.3}}
+\newlabel{sec:deep-lear-arch-regr}{{3}{3}{Deep Learning Architectures and Regression}{section.3}{}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:regr}{{1a}{4}{Network Regression\relax }{figure.caption.1}{}}
+\newlabel{sub@fig:regr}{{a}{4}{Network Regression\relax }{figure.caption.1}{}}
+\newlabel{fig:expe_impr}{{1b}{4}{Acquisition Functions\relax }{figure.caption.1}{}}
+\newlabel{sub@fig:expe_impr}{{b}{4}{Acquisition Functions\relax }{figure.caption.1}{}}
+\newlabel{fig:arch}{{1c}{4}{Network Architecture\relax }{figure.caption.1}{}}
+\newlabel{sub@fig:arch}{{c}{4}{Network Architecture\relax }{figure.caption.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces An illustration of our proposed optimization algorithm showing in \ref  {fig:regr} the interpolation using the neural network's representation at the last hidden layer and in \ref  {fig:expe_impr} the selection criteria (expected improvement and greatest variance) used to identify the next query point. Using linear regression we obtain confidence envelopes about the predicted mean, which are necessary for weighing the exploitation-exploration trade-off. In \ref  {fig:arch} we shown a \textit  {scaled down} version of the architecture used in our experiments: namely, our approach can handle more than four inputs to $f$ and each hidden layer uses fifty (rather than five) hidden units. However, the architecture shown here is at least illustrative of the overall optimization algorithm. The weights connecting the last hidden layer are replaced by those learned via linear regression \textit  {post hoc}.\relax }}{4}{figure.caption.1}}
+\newlabel{fig:regr-expe-impr-arch}{{1}{4}{An illustration of our proposed optimization algorithm showing in \ref {fig:regr} the interpolation using the neural network's representation at the last hidden layer and in \ref {fig:expe_impr} the selection criteria (expected improvement and greatest variance) used to identify the next query point. Using linear regression we obtain confidence envelopes about the predicted mean, which are necessary for weighing the exploitation-exploration trade-off. In \ref {fig:arch} we shown a \textit {scaled down} version of the architecture used in our experiments: namely, our approach can handle more than four inputs to $f$ and each hidden layer uses fifty (rather than five) hidden units. However, the architecture shown here is at least illustrative of the overall optimization algorithm. The weights connecting the last hidden layer are replaced by those learned via linear regression \textit {post hoc}.\relax }{figure.caption.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Model and Optimization Details}{4}{subsection.3.1}}
+\newlabel{sec:mode-and-opti-deta}{{3.1}{4}{Model and Optimization Details}{subsection.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Parallel Optimization Structure}{4}{subsection.3.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Theoretical Bounds}{5}{section.4}}
+\newlabel{sec:theo-boun}{{4}{5}{Theoretical Bounds}{section.4}{}}
+\newlabel{eq:resu}{{12}{5}{Theoretical Bounds}{equation.4.12}{}}
+\newlabel{eq:heav-left}{{21}{5}{Theoretical Bounds}{equation.4.21}{}}
+\newlabel{fig:para}{{2a}{6}{Parallel Speed Increase\relax }{figure.caption.2}{}}
+\newlabel{sub@fig:para}{{a}{6}{Parallel Speed Increase\relax }{figure.caption.2}{}}
+\newlabel{fig:cumu_regr_1}{{2b}{6}{Gaussian Mixture Regret\relax }{figure.caption.2}{}}
+\newlabel{sub@fig:cumu_regr_1}{{b}{6}{Gaussian Mixture Regret\relax }{figure.caption.2}{}}
+\newlabel{fig:cumu_regr_2}{{2c}{6}{$4$-D Hartmann Regret\relax }{figure.caption.2}{}}
+\newlabel{sub@fig:cumu_regr_2}{{c}{6}{$4$-D Hartmann Regret\relax }{figure.caption.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces We show an illustration of the speed-up that is possible by exploiting a parallel optimization structure in \ref  {fig:para}. In this example, we use four total processes running at parallel: two devoted to evaluating $f$ at the chosen points in $\mathcal  {X}$, one for managing work as new information becomes available, and one for updating the neural network representation learned by the neural network as more training data is acquired. In \ref  {fig:cumu_regr_1} we show the results of running our neural network-based optimization algorithm on a Gaussian mixture model with multiple modes in the unit hypercube. Additionally in \ref  {fig:cumu_regr_2} we show the results of trying to optimize the four-dimensional Hartmann function. Notice that in both cases the optimization successfully finds the global maximum with the function domain as indicated by the minimum regret. Furthermore, the average cumulative regret is trending downwards, as desired.\relax }}{6}{figure.caption.2}}
+\newlabel{fig:para-cumu-regr}{{2}{6}{We show an illustration of the speed-up that is possible by exploiting a parallel optimization structure in \ref {fig:para}. In this example, we use four total processes running at parallel: two devoted to evaluating $f$ at the chosen points in $\X $, one for managing work as new information becomes available, and one for updating the neural network representation learned by the neural network as more training data is acquired. In \ref {fig:cumu_regr_1} we show the results of running our neural network-based optimization algorithm on a Gaussian mixture model with multiple modes in the unit hypercube. Additionally in \ref {fig:cumu_regr_2} we show the results of trying to optimize the four-dimensional Hartmann function. Notice that in both cases the optimization successfully finds the global maximum with the function domain as indicated by the minimum regret. Furthermore, the average cumulative regret is trending downwards, as desired.\relax }{figure.caption.2}{}}
+\newlabel{eq:subg}{{22}{6}{Theoretical Bounds}{equation.4.22}{}}
+\newlabel{eq:conc}{{27}{6}{Theoretical Bounds}{equation.4.27}{}}
+\citation{snoek-scalable}
+\newlabel{fig:prob-gaus}{{3a}{7}{Empirical Probability on Gaussian Process\relax }{figure.caption.3}{}}
+\newlabel{sub@fig:prob-gaus}{{a}{7}{Empirical Probability on Gaussian Process\relax }{figure.caption.3}{}}
+\newlabel{fig:prob-hart}{{3b}{7}{Empirical Probability on $4$-D Hartmann Function\relax }{figure.caption.3}{}}
+\newlabel{sub@fig:prob-hart}{{b}{7}{Empirical Probability on $4$-D Hartmann Function\relax }{figure.caption.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces We show an empirical experiment that demonstrates behavior consistent with the prediction of the theory. In \ref  {fig:prob-gaus}, we seek to find the global maximum of a synthetic Gaussian process defined on an interval of $\mathbb  {R}$, which is scaled to $\left [{-1,+1}\right ]$. The theory implies that for any $\epsilon $ (here $\epsilon = 0.7$), the probability that average regret will exceed $\epsilon $ decreases exponentially for every $n>n_0$, for some $n_0$ dependent on $\epsilon $. We speculate here that $n_0\approx 400$. We run the optimization procedure one-hundred times and calculate empirically the number of times that the average cumulative regret exceeded $\epsilon $ for every $n$. We show the probability on a logarithmic scale and confirm that it does display the exponential decrease. An identical experiment was performed for the (much harder) Hartmann optimization problem in four dimensions. The results are shown in \ref  {fig:prob-hart}.\relax }}{7}{figure.caption.3}}
+\newlabel{fig:prob}{{3}{7}{We show an empirical experiment that demonstrates behavior consistent with the prediction of the theory. In \ref {fig:prob-gaus}, we seek to find the global maximum of a synthetic Gaussian process defined on an interval of $\R $, which is scaled to $\brac {-1,+1}$. The theory implies that for any $\epsilon $ (here $\epsilon = 0.7$), the probability that average regret will exceed $\epsilon $ decreases exponentially for every $n>n_0$, for some $n_0$ dependent on $\epsilon $. We speculate here that $n_0\approx 400$. We run the optimization procedure one-hundred times and calculate empirically the number of times that the average cumulative regret exceeded $\epsilon $ for every $n$. We show the probability on a logarithmic scale and confirm that it does display the exponential decrease. An identical experiment was performed for the (much harder) Hartmann optimization problem in four dimensions. The results are shown in \ref {fig:prob-hart}.\relax }{figure.caption.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Experimental Results}{7}{section.5}}
+\newlabel{sec:expe-resu}{{5}{7}{Experimental Results}{section.5}{}}
+\citation{srinivas-bandit}
+\citation{desautels}
+\bibcite{auer}{{1}{}{{}}{{}}}
+\bibcite{bercu}{{2}{}{{}}{{}}}
+\bibcite{bergstra}{{3}{}{{}}{{}}}
+\bibcite{contal}{{4}{}{{}}{{}}}
+\bibcite{cover}{{5}{}{{}}{{}}}
+\bibcite{defreitas}{{6}{}{{}}{{}}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{8}{section.6}}
+\bibcite{desautels}{{7}{}{{}}{{}}}
+\bibcite{hensman}{{8}{}{{}}{{}}}
+\bibcite{lee}{{9}{}{{}}{{}}}
+\bibcite{osborne}{{10}{}{{}}{{}}}
+\bibcite{snoek-scalable}{{11}{}{{}}{{}}}
+\bibcite{snoek-practical}{{12}{}{{}}{{}}}
+\bibcite{srinivas-bandit}{{13}{}{{}}{{}}}
+\bibcite{srinivas-bounds}{{14}{}{{}}{{}}}
+\bibcite{wang}{{15}{}{{}}{{}}}
+\providecommand\NAT@force@numbers{}\NAT@force@numbers

@@ -9,6 +9,7 @@ par:
 clean:
 	find -name "*pyc" -delete
 push:
+	git push origin development
 	git checkout master
 	git pull origin master
 	git merge development

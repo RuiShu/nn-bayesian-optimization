@@ -4,5 +4,8 @@ output1.txt
 framework.org
 makefile
 fig.zip
-report2
+report
 *pyc
+*csv
+*txt
+neural-network-optimization

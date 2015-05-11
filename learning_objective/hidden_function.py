@@ -22,7 +22,7 @@ GP = 1
 GM = 2
 
 # Set it
-method = HM
+method = 1
 
 def get_settings(lim_domain_only=False):
     # Settings
@@ -40,11 +40,11 @@ def get_settings(lim_domain_only=False):
         return lim_domain
 
     init_size = 50
-    additional_query_size = 400
+    additional_query_size = 300
     selection_size = 1
 
     # Get initial set of locations to query
-    init_query = np.random.uniform(-1, 1, size=(init_size, lim_domain.shape[1]))
+    init_query = np.random.uniform(0, 1, size=(init_size, lim_domain.shape[1]))
 
     # WARNING. SET THE THING YOURSELF FOR NOW.
     if method == HM:
@@ -55,7 +55,7 @@ def get_settings(lim_domain_only=False):
         X = np.meshgrid(r, r)
 
     if method == GP:
-        domain = np.atleast_2d(np.linspace(-1, 1, 2500)).T
+        domain = np.atleast_2d(np.linspace(-1, 1, 5000)).T
     else:
         xx = np.atleast_2d([x.ravel() for x in X]).T
         domain = np.atleast_2d(xx[0])

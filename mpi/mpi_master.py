@@ -98,6 +98,7 @@ def master_process():
     print "Selection size is: " + str(selection_size)
 
     # Set counters
+    listen_to_trainer = True
     trainer_is_ready = True     # Determines if trainer will be used
     trainer_index = 0   # Keeps track of data that trainer doesn't have
     selection_index = 0         # Keeps track of unqueried selected_points 
@@ -106,7 +107,6 @@ def master_process():
 
     t0 = time.time()
 
-    # while False:
     while closed_workers < num_workers:
         if selection_index == selection_size:
             # Update optimizer's dataset and retrain LR
@@ -133,6 +133,7 @@ def master_process():
 
         if tag == WORKER_READY:
             if queries_done < queries_total:
+                print "MASTER: Sending work to Worker %2d" % source
                 comm.send(selected_points[selection_index, :], 
                           dest=source, tag=SEND_WORKER) 
                 selection_index += 1
@@ -155,9 +156,11 @@ def master_process():
                 f.write(info)
 
         elif tag == TRAINER_DONE:
-            print "MASTER: Updating neural network"
-            W, B, architecture = data
-            optimizer.update_params(W, B, architecture)
+            if listen_to_trainer:
+                print "MASTER: Updating neural network"
+                W, B, architecture = data
+                optimizer.update_params(W, B, architecture)
+
             trainer_is_ready = not trainer_is_ready 
 
         elif tag == EXIT_WORKER or tag == EXIT_TRAINER:

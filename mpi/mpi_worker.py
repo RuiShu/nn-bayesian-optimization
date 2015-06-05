@@ -25,7 +25,7 @@ def worker_process(rank):
 
         elif tag == EXIT_WORKER:
             # Worker dies!
-            print "WORKER: Worker %2d commiting suicide" % rank
+            print "WORKER: Worker %2d exiting" % rank
             break
 
     comm.send(None, dest=0, tag=EXIT_WORKER) # Suicide complete

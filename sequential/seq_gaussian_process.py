@@ -1,7 +1,6 @@
 import numpy as np
 import time
 import scipy.stats as stats
-from sklearn import gaussian_process
 from learning_objective.hidden_function import evaluate, true_evaluate, get_settings
 import pyGPs
 
@@ -28,17 +27,17 @@ def select(dataset, pred_y, sigma2_pred):
 
     if np.max(ei) <= 0:
         select_index = np.argmax(sig)
-        print "optimizer.py: Pure exploration"
     else:
         select_index = np.argmax(ei)
-        print "optimizer.py: All expected"
 
     return np.atleast_2d(domain[select_index, :])
 
 
 if __name__ == "__main__":
+    print_statements = False
+
     # Open file to write times for comparison
-    f = open("data/crap_gp_350obs_time_data.csv", "a")
+    file_record = open("data/gp_time_data.csv", "a")
 
     # Get settings relevant to the hidden function being used
     lim_domain, init_size, additional_query_size, init_query, domain, selection_size = get_settings()
@@ -46,11 +45,12 @@ if __name__ == "__main__":
     # Construct the dataset
     dataset = evaluate(init_query[0,:], lim_domain)
 
+    print "Randomly query a set of initial points... ",
+
     for query in init_query[1:,:]:
         dataset = np.concatenate((dataset, evaluate(query, lim_domain)), axis=0)
 
     print "Complete initial dataset acquired"
-    print dataset
     
     # Begin sequential optimization using Gaussian process based query system
     model = pyGPs.GPR() 
@@ -61,13 +61,21 @@ if __name__ == "__main__":
     sigma2_pred = model.ys2
     query = select(dataset, y_pred, sigma2_pred)
 
+    print "Performing optimization... "
+
     for i in range(additional_query_size):
         t0 = time.time()
         new_data = evaluate(query, lim_domain)
         dataset = np.concatenate((dataset, new_data), axis=0)
-        string1 = "Tasks done: %3d. " % (i+1)
-        string2 = "New data added to dataset: " + str(new_data)
-        print string1 + string2
+
+        if print_statements:
+            string1 = "Tasks done: %3d. " % (i+1)
+            string2 = "New data added to dataset: " + str(new_data)
+            print string1 + string2
+            
+        else:
+            if (i+1) % (additional_query_size/10) == 0:
+                print "%.3f completion..." % ((i+1.)/additional_query_size)
 
         model.getPosterior(dataset[:,:-1], dataset[:,-1:])
 
@@ -82,10 +90,10 @@ if __name__ == "__main__":
         query = select(dataset, y_pred, sigma2_pred)
 
         info = "%.3f," % (time.time()-t0)
-        f.write(info)
+        file_record.write(info)
 
-    # f.write("NA\n")
-    f.close()
+    file_record.write("NA\n")
+    file_record.close()
         
     print "Sequential gp optimization task complete."
     print "Best evaluated point is:"
@@ -93,8 +101,3 @@ if __name__ == "__main__":
     print "Predicted best point is:"
     index = np.argmax(y_pred[:, 0])
     print np.concatenate((np.atleast_2d(domain[index, :]), np.atleast_2d(y_pred[index, 0])), axis=1)[0, :]
-
-    # for i in range(additional_query_size):
-    #     gp.fit(dataset[:,:-1], dataset[:,-1:])
-    #     y_pred, sigma2_pred = gp.predict(domain, eval_MSE=True)
-    #     query = select(dataset, y_pred, sigma2_pred)

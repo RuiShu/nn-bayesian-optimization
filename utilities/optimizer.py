@@ -125,9 +125,9 @@ class Optimizer(object):
         ei = sig*(gamma*stats.norm.cdf(gamma) + stats.norm.pdf(gamma))
 
         if np.max(ei) <= 0:
+            # If no good points, do pure exploration
             sig_order = np.argsort(-sig, axis=0)
             select_indices = sig_order[:cap, 0].tolist()
-            print "optimizer.py: Pure exploration"
         else:
             ei_order = np.argsort(-1*ei, axis=0)
             select_indices = [ei_order[0, 0]]
@@ -142,12 +142,10 @@ class Optimizer(object):
                     break 
 
             if len(select_indices) < cap:
-                print "optimizer.py: Exploration appended"
+                # If not enough good points, append with exploration
                 sig_order = np.argsort(-sig, axis=0)
                 add_indices = sig_order[:(cap-len(select_indices)), 0].tolist()
                 select_indices.extend(add_indices)
-            else:
-                print "optimizer.py: All expected"
 
         index = np.argmax(ei)
         self.__gamma = gamma

@@ -7,7 +7,7 @@ Trainer -- in charge of handling the neural network training.
 from mpi_definitions import *
 from theano_definitions import *
 
-def trainer_process():
+def trainer_process(print_statements):
     import utilities.neural_net as nn
     nobs = 0
     dataset = None
@@ -18,7 +18,8 @@ def trainer_process():
         tag = status.Get_tag()
 
         if tag == SEND_TRAINER:
-            print "TRAINER: Received from master, starting new neural net"
+            if print_statements:
+                print "TRAINER: Received from master, starting new neural net"
 
             if dataset == None:
                 dataset = new_data
@@ -32,11 +33,13 @@ def trainer_process():
             neural_net.train()
             W, B = neural_net.extract_params()
 
-            print "TRAINER: Sending back to master"
+            if print_statements:
+                print "TRAINER: Sending back neural net to master"
+
             comm.send((W, B, architecture), dest=0, tag=TRAINER_DONE)
             
         elif tag == EXIT_TRAINER:
-            print "TRAINER: Commiting suicide"
+            print "TRAINER: Exiting"
             break
 
     comm.send(None, dest=0, tag=EXIT_TRAINER) # Suicide complete

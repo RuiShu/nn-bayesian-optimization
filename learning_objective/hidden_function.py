@@ -5,26 +5,23 @@
 Provides a proxy hidden function for running of optimizer and mpi_optimizer
 """
 
-# To change between hidden funcs:
-# Make sure lim_domain is set correctly
-# Make sure r linspace is set correctly
-# Make sure r meshgrid is set correctly
-# Make sure set gm v. gp v. hm
-
 import numpy as np
 import time
 from gaussian_mix import gaussian_mix as gm
 from hartmann import hartmann as hm
 from gaussian_process import gaussian_process as gp
 
-HM = 0
-GP = 1
-GM = 2
+# Definitions for which function to evaluate
+HM = 0     # hartmann
+GP = 1     # gaussian process realization
+GM = 2     # gaussian mixture
 
 # Set it
-method = 1
+method = 1 # currently set as GP
 
 def get_settings(lim_domain_only=False):
+    """ Get settings for the optimizer.
+    """
     # Settings
     if method == HM:
         lim_domain = np.array([[0., 0., 0., 0.],
@@ -41,19 +38,18 @@ def get_settings(lim_domain_only=False):
 
     init_size = 50
     additional_query_size = 300
-    selection_size = 1
+    selection_size = 5
 
     # Get initial set of locations to query
     init_query = np.random.uniform(0, 1, size=(init_size, lim_domain.shape[1]))
 
-    # WARNING. SET THE THING YOURSELF FOR NOW.
+    # Establish the grid size to use. 
     if method == HM:
         r = np.linspace(-1, 1, 15)
         X = np.meshgrid(r, r, r, r)
     elif method == GM:
         r = np.linspace(-1, 1, 50)
         X = np.meshgrid(r, r)
-
     if method == GP:
         domain = np.atleast_2d(np.linspace(-1, 1, 5000)).T
     else:
@@ -107,48 +103,4 @@ def true_evaluate(query, lim_domain):
     elif method == GP:
         dataset = np.concatenate((query, gp(X)), axis=1)
     
-    # time.sleep(2)
-    return dataset
-
-
-""" Alternative functions
-"""
-noiseless_g  = lambda x: 10*np.sin(x) - x
-g            = lambda x: noiseless_g(x) + np.random.randn()/10 # Define the hidden function
-
-
-def evaluate_alt(query, lim_domain):
-    """ Queries a single point with noise.
-
-    Keyword arguments:
-    query      -- a (m,) array. Single point query in input space scaled to unit cube.
-    lim_domain -- a (2, m) array. Defines the search space boundaries of the 
-                  true input space
-    """
-    var     = (lim_domain[1, :] - lim_domain[0, :])/2.
-    mean    = (lim_domain[1, :] + lim_domain[0, :])/2.
-    query   = np.atleast_2d(query)      # Convert to (1, m) array
-    X       = query*var + mean          # Scale query to true input space
-    Y       = np.atleast_2d(g(X[0, 0])) # Compute output
-    dataset = np.concatenate((query, Y), axis=1)  
-
-    # time.sleep(0.5)
-    return dataset
-    
-def true_evaluate_alt(query, lim_domain):
-    """ Queries a single point without noise.
-
-    Keyword arguments:
-    query      -- a (m,) array. Single point query in input space scaled to unit cube.
-    lim_domain -- a (2, m) array. Defines the search space boundaries of the 
-                  true input space
-    """
-    var     = (lim_domain[1, :] - lim_domain[0, :])/2.
-    mean    = (lim_domain[1, :] + lim_domain[0, :])/2.
-    query   = np.atleast_2d(query)                # Convert to (1, m) array
-    X       = query*var + mean                    # Scale query to true input space
-    Y       = np.atleast_2d(noiseless_g(X[0, 0])) # Compute output
-    dataset = np.concatenate((query, Y), axis=1)  
-
-    # time.sleep(0.5)
     return dataset

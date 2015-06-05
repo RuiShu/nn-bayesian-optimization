@@ -1,3 +1,7 @@
+# For tahoe server:
+# import sys
+# sys.path.append('/usr/lib64/python2.7/site-packages/mpich')
+
 from mpi4py import MPI
 import numpy as np
 

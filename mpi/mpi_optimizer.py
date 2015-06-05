@@ -24,6 +24,8 @@ import mpi_master as master
 import mpi_worker as worker
 import mpi_trainer as trainer
 
+print_statements = False
+
 # Check that we have the right number of processes
 if size < 3 and not rank == MASTER:
     quit()
@@ -35,8 +37,8 @@ elif size < 3:
 print "THE RANK IS: %d, with total size: %d" % (rank, size)
 
 if rank == MASTER:
-    master.master_process()
+    master.master_process(print_statements)
 elif rank == TRAINER:
-    trainer.trainer_process()
+    trainer.trainer_process(print_statements)
 else:
     worker.worker_process(rank)

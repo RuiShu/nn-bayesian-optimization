@@ -19,8 +19,6 @@ class NeuralNet(object):
         architecture = self.__architecture
         dataset = self.__dataset
 
-        print "neural network dataset of size: " + str(dataset.shape[0]) + ", trained using architecture: " + str(self.__architecture)
-
         cut = int(0.9 * len(dataset))  # select 90% of data for training, 10% for validation
         idx = range(len(dataset))
         np.random.shuffle(idx)
